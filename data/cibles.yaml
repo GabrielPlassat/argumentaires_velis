@@ -115,6 +115,24 @@ collectivite:
         - "Associer la presse locale en lui proposant un essai."
       ressources: [R-EXPO, R-MOTION, R-FESTIVALS, R-DECOUVRIR, R-30VELI]
       conseil: "Montrer des usagers valorisés et des usages de loisirs ; éviter d'ouvrir par la sécurité ou le « remplacement de la voiture »."
+    cofinancement:
+      label: "Cofinancer un projet avec des vélis"
+      accroche: "Pour {structure}, cofinancer un projet avec des vélis (expérimentation, flotte partagée, service de mobilité solidaire, atelier de maintenance) permet de démultiplier l'effet de chaque euro public en s'associant à d'autres financeurs et aux acteurs du territoire."
+      enjeux:
+        - "Obtenir un effet de levier sur un budget local contraint."
+        - "Soutenir des projets aux bénéfices multiples : climat, pouvoir d'achat, emploi local, inclusion."
+        - "Partager les risques avec d'autres financeurs publics et privés."
+        - "Disposer de résultats mesurables pour décider d'un déploiement."
+      preuves: [FIN-04, PUB-02, PUB-01, PUB-10, EXP-13, ECO-09, FIN-02, FIN-03, CEE-01, SOC-03, IND-03, EXP-12]
+      motifs: [professionnel, domicile_travail]
+      usages: ["véhicules municipaux", "Véhicule En libre service", "trajets domicile travail"]
+      objections: [OBJ-PRIX, OBJ-ORGANISATION, OBJ-MATURITE]
+      actions:
+        - "Définir le projet à cofinancer et ses indicateurs de résultat (usages, coûts, émissions évitées)."
+        - "Réunir les cofinanceurs possibles : direction régionale de l'ADEME, région, département, entreprises du territoire, fondations."
+        - "Mobiliser les dispositifs existants : Fonds vert Mobilités rurales, appels à projets régionaux, AMI territoriaux, prime CEE TRA-EQ-130."
+        - "Confier le portage opérationnel à un partenaire (association, opérateur de location) et prévoir une évaluation dès le départ."
+      ressources: [R-TROUVERFIN, R-FINANCEMENT, R-GUIDE, R-8FREINS, R-FICHES-TERR]
 
 entreprise_flotte:
   label: "Entreprise disposant d'une flotte de véhicules"
@@ -194,6 +212,23 @@ entreprise_flotte:
         - "Inscrire un objectif de vélis dans le plan de mobilité employeur."
         - "Valoriser l'engagement dans le reporting extra-financier."
       ressources: [R-AVELIPRO, R-BILANTHEM]
+    cofinancement:
+      label: "Cofinancer un projet avec des vélis"
+      accroche: "Pour {structure}, cofinancer un projet avec des vélis sur son territoire d'implantation est un engagement concret et visible : il soutient la mobilité des habitants et des salariés, une filière industrielle française et des emplois locaux."
+      enjeux:
+        - "Traduire la politique RSE en actions mesurables sur le territoire."
+        - "Faciliter la mobilité des salariés, des clients ou des riverains."
+        - "Associer l'image de l'entreprise à une innovation française et sobre."
+        - "Partager l'investissement avec des partenaires publics."
+      preuves: [FIN-04, FIN-06, ENV-01, IND-01, SOC-04, FIN-02, FIN-05, EXP-13, ECO-11, COM-04, CEE-01]
+      motifs: [domicile_travail, professionnel]
+      usages: ["trajets domicile travail", "Véhicule En libre service"]
+      objections: [OBJ-MATURITE, OBJ-IMAGE, OBJ-ORGANISATION]
+      actions:
+        - "Choisir un projet à soutenir avec la collectivité : expérimentation, autopartage, service pour l'emploi, atelier de réparation."
+        - "Définir la contribution (financement, mise à disposition de sites, essais par les salariés) et la valorisation dans le reporting extra-financier."
+        - "Se rapprocher de la direction régionale de l'ADEME et du GT Investissement et financement de l'XD."
+      ressources: [R-GTINVEST, R-FINANCEMENT, R-AVELIPRO, R-TROUVERFIN]
 
 entreprise_financeur:
   label: "Entreprise ou acteur qui pourrait financer"

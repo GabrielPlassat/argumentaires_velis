@@ -45,6 +45,17 @@ def _phrase_preuve(b, afficher_niveaux: bool, deja_dit: set | None = None) -> st
     return phrase
 
 
+NOMS_PROPRES = {"Autoplume", "Zigzaguer", "Wimoov", "Karbikes", "Urbaner", "Weez", "Biro", "France", "Ecobalyse"}
+
+
+def _nom_propre(mot: str) -> bool:
+    """Vrai si le premier mot doit garder sa majuscule (nom propre, sigle, nombre)."""
+    if mot in NOMS_PROPRES or any(c.isdigit() for c in mot):
+        return True
+    corps = mot[2:] if mot[:2] in ("L'", "L’") else mot[1:]
+    return mot[:2] not in ("L'", "L’") and any(c.isupper() for c in corps)
+
+
 def _connecter(phrases: list[str]) -> list[str]:
     """Regroupe les phrases en paragraphes de deux ou trois, reliés par des connecteurs."""
     paragraphes, courant = [], []
@@ -52,11 +63,11 @@ def _connecter(phrases: list[str]) -> list[str]:
         if courant:
             connecteur = CONNECTEURS[min(len(courant), len(CONNECTEURS) - 1)]
             if connecteur and not re.match(r"^(Selon|Dans|Avec|Pour|Sur|Par|Au|En|Depuis|Entre|Grâce|Face|Habitués)\b", ph):
-                premier = ph.split(" ")[0]
-                if re.match(r"^(Le|La|Les|L'|L’|Un|Une|Des|Ce|Cette|Ces|Chaque|Plus|Deux|Trois|Quatre|Cinq|Mettre|Livrer|Passer|Remplacer|Avec|Fabrication)\b", premier) or premier in ("Le", "La", "Les"):
-                    ph = connecteur + ph[0].lower() + ph[1:]
-                else:
+                premier = re.sub(r"[,.;:]$", "", ph.split(" ")[0])
+                if _nom_propre(premier):
                     ph = connecteur + ph
+                else:
+                    ph = connecteur + ph[0].lower() + ph[1:]
         courant.append(ph)
         if len(courant) == 3 or i == len(phrases) - 1:
             paragraphes.append(" ".join(courant))

@@ -75,6 +75,14 @@ with onglet_gen:
         st.subheader("2. Contexte")
         structure = st.text_input("Nom de la structure destinataire (facultatif)",
                                   placeholder="ex. la Communauté de communes du Clunisois")
+        precisions = st.text_area(
+            "Préciser le contexte (facultatif)",
+            placeholder="ex. La communauté de communes doit renouveler 6 véhicules de service en 2027 et prépare "
+                        "son plan de mobilité simplifié ; les élus s'interrogent sur le coût et la sécurité.",
+            help="Ce texte est transmis à la rédaction assistée pour adapter l'argumentaire. "
+                 "S'il est rédigé comme une phrase destinée au lecteur, il peut aussi être repris en introduction.")
+        reprendre = st.checkbox("Reprendre ce texte en introduction de l'argumentaire", value=False,
+                                disabled=not precisions.strip())
         types = st.multiselect("Type de territoire", options=list(TERRITOIRES),
                                format_func=lambda k: TERRITOIRES[k][0], placeholder="Choisir...")
         territoires_ref = st.multiselect(
@@ -101,7 +109,8 @@ with onglet_gen:
         max_preuves = st.slider("Nombre d'arguments clés", 4, 15, 9)
 
         if st.button("Générer l'argumentaire", type="primary", disabled=not selection, width="stretch"):
-            ctx = Contexte(selection=selection, structure=structure, types_territoire=types,
+            ctx = Contexte(selection=selection, structure=structure, precisions=precisions,
+                           reprendre_precisions=reprendre, types_territoire=types,
                            territoires_30veli=territoires_ref, diffusion_externe=diffusion_externe,
                            inclure_objections=objections, inclure_relativiser=relativiser,
                            inclure_conseils=conseils, inclure_catalogue=catalogue, max_preuves=max_preuves,
@@ -160,6 +169,7 @@ with onglet_ia:
             modele = FOURNISSEURS["albert"]["modele"]
         st.caption(f"IA utilisée : {FOURNISSEURS[fournisseur]['nom']} — modèle « {modele} »")
         consignes = st.text_area("Précisez la cible et la situation (rendez-vous, courrier, réunion publique...)",
+                                 value=st.session_state["ctx"].precisions if st.session_state.get("ctx") else "",
                                  placeholder="ex. Courrier au président de l'intercommunalité, qui doit renouveler 6 véhicules de service en 2027.")
         c1, c2 = st.columns(2)
         longueur = c1.selectbox("Longueur", ["1 page", "2 pages", "4 pages", "un courriel de 15 lignes"], index=1)

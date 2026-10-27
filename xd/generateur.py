@@ -38,6 +38,8 @@ PREUVES_RELATIVISER = ["PUB-04", "PUB-05", "PUB-06", "PUB-01", "PUB-10"]
 class Contexte:
     selection: list                      # [(famille_id, objectif_id), ...]
     structure: str = ""
+    precisions: str = ""                 # contexte libre saisi par l'utilisateur
+    reprendre_precisions: bool = True    # reprendre ce texte en introduction
     types_territoire: list = field(default_factory=list)
     territoires_30veli: list = field(default_factory=list)
     diffusion_externe: bool = True
@@ -173,6 +175,8 @@ def generer(base: Base, ctx: Contexte) -> Argumentaire:
     s = Section("En bref")
     for *_, obj in objectifs:
         s.blocs.append(Bloc("paragraphe", texte=obj["accroche"].replace("{structure}", structure)))
+    if ctx.precisions.strip() and ctx.reprendre_precisions:
+        s.blocs.append(Bloc("paragraphe", texte=ctx.precisions.strip()))
     enjeux = _uniques(e for *_, obj in objectifs for e in obj.get("enjeux", []))[:7]
     if enjeux:
         s.blocs.append(Bloc("puces", titre="Ce qui compte pour vous", items=enjeux))
