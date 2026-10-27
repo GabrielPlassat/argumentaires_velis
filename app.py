@@ -138,26 +138,36 @@ with onglet_ia:
     st.write("Étape facultative : l'IA reformule l'argumentaire en texte suivi, **uniquement** à partir des preuves "
              "sélectionnées. Un contrôle signale ensuite tout nombre absent du dossier de preuves.")
     arg = st.session_state.get("arg")
-    cle = _secret("ANTHROPIC_API_KEY")
+    from xd.ia import FOURNISSEURS, ErreurIA, choisir_fournisseur, rediger, verifier_nombres
+
+    choix_ia = choisir_fournisseur({k: _secret(k) for k in ("ALBERT_API_KEY", "ANTHROPIC_API_KEY")})
     if not arg:
         st.info("Générez d'abord un argumentaire dans l'onglet « Argumentaire ».")
-    elif not cle:
-        st.info("Aucune clé d'API n'est configurée. Ajoutez ANTHROPIC_API_KEY dans les secrets de l'application "
-                "(voir le mode d'emploi). L'argumentaire de l'onglet principal reste utilisable sans IA.")
+    elif not choix_ia:
+        st.info("Aucune clé d'API n'est configurée. Ajoutez ALBERT_API_KEY (API de l'État) ou ANTHROPIC_API_KEY "
+                "dans les secrets de l'application (voir le mode d'emploi). "
+                "L'argumentaire de l'onglet principal reste utilisable sans IA.")
     else:
-        from xd.ia import MODELE_DEFAUT, rediger, verifier_nombres
-
+        fournisseur, cle = choix_ia
+        modele = _secret("MODELE") or FOURNISSEURS[fournisseur]["modele"]
+        if fournisseur == "albert" and modele.startswith("claude"):
+            modele = FOURNISSEURS["albert"]["modele"]
+        st.caption(f"IA utilisée : {FOURNISSEURS[fournisseur]['nom']} — modèle « {modele} »")
         consignes = st.text_area("Précisez la cible et la situation (rendez-vous, courrier, réunion publique...)",
                                  placeholder="ex. Courrier au président de l'intercommunalité, qui doit renouveler 6 véhicules de service en 2027.")
         c1, c2 = st.columns(2)
         longueur = c1.selectbox("Longueur", ["1 page", "2 pages", "4 pages", "un courriel de 15 lignes"], index=1)
         ton = c2.selectbox("Ton", ["institutionnel", "direct et concret", "pédagogique", "convaincant pour des élus"])
         if st.button("Rédiger", type="primary"):
+            texte = None
             with st.spinner("Rédaction en cours..."):
-                texte = rediger(arg, base, cle, consignes or "voir dossier", longueur, ton,
-                                _secret("MODELE", MODELE_DEFAUT))
-            st.session_state["texte_ia"] = texte
-            st.session_state["suspects"] = verifier_nombres(texte, arg, base, consignes + " " + st.session_state["ctx"].structure)
+                try:
+                    texte = rediger(arg, base, cle, consignes or "voir dossier", longueur, ton, modele, fournisseur)
+                except ErreurIA as e:
+                    st.error(str(e))
+            if texte:
+                st.session_state["texte_ia"] = texte
+                st.session_state["suspects"] = verifier_nombres(texte, arg, base, consignes + " " + st.session_state["ctx"].structure)
         if st.session_state.get("texte_ia"):
             suspects = st.session_state.get("suspects", [])
             if suspects:
@@ -257,7 +267,7 @@ with onglet_aide:
   ou d'un calcul sur les données (`data/experiences_30veli.csv`, `data/catalogue_velis.csv`).
 - Le **niveau de preuve** distingue mesures, retours de terrain, textes en vigueur, estimations, projections et objectifs.
 - Le **mode diffusion externe** écarte les documents internes (Bilan XD 2022-2025, notes de travail...).
-- La rédaction IA est contrôlée : tout nombre absent du dossier de preuves est signalé.
+- La rédaction IA (Albert ou Claude) est contrôlée : tout nombre absent du dossier de preuves est signalé.
 
 ### Mettre à jour les contenus
 - Corriger ou ajouter un argument : éditer `data/preuves.yaml` directement sur GitHub (bouton crayon).

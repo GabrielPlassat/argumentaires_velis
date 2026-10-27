@@ -12,7 +12,7 @@ Chaque argumentaire assemble, pour la ou les cibles cochées :
 - les **étapes pour s'engager** et les ressources du wiki XD ;
 - une liste de **sources numérotées**, avec le statut public / interne de chacune.
 
-Aucun chiffre n'est généré par une IA. Une étape de **rédaction assistée** (facultative, API Claude) reformule le texte
+Aucun chiffre n'est généré par une IA. Une étape de **rédaction assistée** (facultative, API Albert de l'État ou API Claude) reformule le texte
 à partir des seules preuves sélectionnées, puis signale tout nombre absent du dossier de preuves.
 
 ---
@@ -33,8 +33,10 @@ Aucun chiffre n'est généré par une IA. Une étape de **rédaction assistée**
 2. **Create app** → choisir le dépôt `xd-argumentaires`, branche `main`, fichier `app.py` → **Deploy**.
 3. Dans **Settings → Secrets**, coller (en adaptant) le contenu de `.streamlit/secrets.toml.example` :
    - `APP_PASSWORD` : protège l'accès par un mot de passe (conseillé si le dépôt contient des éléments internes) ;
-   - `ANTHROPIC_API_KEY` : active l'onglet *Rédaction assistée* (facultatif) ;
-   - `MODELE` : nom du modèle Claude (facultatif, vérifier les noms sur https://docs.claude.com).
+   - `ALBERT_API_KEY` : active l'onglet *Rédaction assistée* avec Albert, l'API IA de l'État (facultatif) ;
+   - ou `ANTHROPIC_API_KEY` pour utiliser Claude à la place (clé commençant par `sk-ant-`) ;
+   - `MODELE` : modèle utilisé (facultatif ; par défaut `openweight-large` pour Albert, voir
+     https://guides.ia.numerique.gouv.fr/albert-api/modeles/available-models).
 4. Dans **Settings → Sharing**, restreindre les personnes autorisées si besoin.
 
 À chaque modification d'un fichier sur GitHub, l'application se met à jour automatiquement.

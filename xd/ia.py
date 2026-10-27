@@ -12,6 +12,29 @@ from .generateur import NIVEAUX, Argumentaire
 
 MODELE_DEFAUT = "claude-sonnet-5-5"
 
+# Fournisseurs pris en charge. Albert (API de l'État, compatible OpenAI) est utilisé
+# dès qu'une clé ALBERT_API_KEY est présente dans les secrets.
+FOURNISSEURS = {
+    "albert": {"nom": "Albert (DINUM)", "url": "https://albert.api.etalab.gouv.fr/v1",
+               "modele": "openweight-large"},
+    "anthropic": {"nom": "Claude (Anthropic)", "url": None, "modele": MODELE_DEFAUT},
+}
+
+
+class ErreurIA(Exception):
+    """Erreur d'appel à l'IA, avec un message compréhensible."""
+
+
+def choisir_fournisseur(secrets: dict) -> tuple[str, str] | None:
+    """Renvoie (fournisseur, clé) selon les secrets disponibles, Albert en priorité."""
+    if secrets.get("ALBERT_API_KEY"):
+        return "albert", secrets["ALBERT_API_KEY"]
+    if secrets.get("ANTHROPIC_API_KEY"):
+        cle = secrets["ANTHROPIC_API_KEY"]
+        # Une clé Anthropic commence par « sk-ant- » : sinon c'est probablement une clé Albert mal nommée.
+        return ("anthropic", cle) if str(cle).startswith("sk-ant-") else ("albert", cle)
+    return None
+
 CONSIGNES = """Tu es rédacteur pour le programme eXtrême Défi Mobilité de l'ADEME.
 Tu rédiges en français un argumentaire destiné à convaincre la cible décrite, à partir d'un dossier de preuves.
 
@@ -57,21 +80,43 @@ def dossier(arg: Argumentaire, base) -> str:
 
 
 def rediger(arg: Argumentaire, base, cle_api: str, consignes_cible: str, longueur: str = "2 pages",
-            ton: str = "institutionnel", modele: str = MODELE_DEFAUT) -> str:
-    import anthropic  # importé ici pour que l'outil fonctionne sans cette dépendance
+            ton: str = "institutionnel", modele: str | None = None, fournisseur: str = "anthropic") -> str:
+    contenu = (f"Cible et contexte : {consignes_cible}\n"
+               f"Longueur visée : {longueur}. Ton : {ton}.\n\n"
+               f"Dossier de preuves :\n{dossier(arg, base)}")
+    if not modele or (fournisseur == "albert" and modele.startswith("claude")):
+        modele = FOURNISSEURS[fournisseur]["modele"]
+    try:
+        if fournisseur == "albert":
+            from openai import OpenAI  # importé ici pour que l'outil fonctionne sans cette dépendance
 
-    client = anthropic.Anthropic(api_key=cle_api)
-    message = client.messages.create(
-        model=modele,
-        max_tokens=6000,
-        system=CONSIGNES,
-        messages=[{"role": "user", "content": (
-            f"Cible et contexte : {consignes_cible}\n"
-            f"Longueur visée : {longueur}. Ton : {ton}.\n\n"
-            f"Dossier de preuves :\n{dossier(arg, base)}"
-        )}],
-    )
-    return "".join(b.text for b in message.content if getattr(b, "type", "") == "text")
+            client = OpenAI(base_url=FOURNISSEURS["albert"]["url"], api_key=cle_api)
+            r = client.chat.completions.create(
+                model=modele, max_tokens=8000, temperature=0.3,
+                messages=[{"role": "system", "content": CONSIGNES}, {"role": "user", "content": contenu}],
+            )
+            return r.choices[0].message.content or ""
+        import anthropic
+
+        client = anthropic.Anthropic(api_key=cle_api)
+        message = client.messages.create(
+            model=modele, max_tokens=6000, system=CONSIGNES,
+            messages=[{"role": "user", "content": contenu}],
+        )
+        return "".join(b.text for b in message.content if getattr(b, "type", "") == "text")
+    except Exception as e:  # message lisible plutôt qu'un plantage de l'application
+        nom = FOURNISSEURS[fournisseur]["nom"]
+        texte = str(e)
+        if "401" in texte or "uthentication" in texte or ("nvalid" in texte and "key" in texte.lower()):
+            raise ErreurIA(f"{nom} refuse la clé d'API : vérifiez qu'elle est valide et bien nommée dans les secrets.") from e
+        if "404" in texte or "model" in texte.lower():
+            raise ErreurIA(f"{nom} ne reconnaît pas le modèle « {modele} ». Corrigez le secret MODELE "
+                           f"(liste des modèles dans la documentation du fournisseur).") from e
+        if "429" in texte:
+            raise ErreurIA(f"{nom} : quota ou limite de requêtes atteint, réessayez dans quelques minutes.") from e
+        if "Connection" in type(e).__name__ or "Timeout" in type(e).__name__:
+            raise ErreurIA(f"{nom} est injoignable pour le moment (réseau ou service indisponible). Réessayez plus tard.") from e
+        raise ErreurIA(f"Erreur lors de l'appel à {nom} : {type(e).__name__}.") from e
 
 
 _NOMBRE = re.compile(r"(?<![\[\w])\d[\d   ]*(?:[,.]\d+)?")

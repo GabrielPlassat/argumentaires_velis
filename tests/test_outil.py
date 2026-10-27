@@ -63,3 +63,35 @@ def test_verification_ia_repere_un_chiffre_invente():
     texte = "Les vélis coûtent 1 € aux 100 km [1] et réduisent les coûts de 87,3 %."
     suspects = verifier_nombres(texte, arg, BASE)
     assert "87,3" in suspects and "1" not in suspects
+
+
+def test_choix_fournisseur_ia():
+    from xd.ia import choisir_fournisseur
+    assert choisir_fournisseur({"ALBERT_API_KEY": "abc"}) == ("albert", "abc")
+    assert choisir_fournisseur({"ANTHROPIC_API_KEY": "sk-ant-x"}) == ("anthropic", "sk-ant-x")
+    # clé Albert rangée par erreur sous ANTHROPIC_API_KEY : reconnue comme Albert
+    assert choisir_fournisseur({"ANTHROPIC_API_KEY": "cle-albert"}) == ("albert", "cle-albert")
+    assert choisir_fournisseur({}) is None
+
+
+def test_redaction_albert_simulee(monkeypatch):
+    import sys, types
+    from xd import ia
+    appels = {}
+
+    class FauxClient:
+        def __init__(self, base_url, api_key):
+            appels["url"] = base_url
+            self.chat = types.SimpleNamespace(completions=types.SimpleNamespace(create=self.create))
+
+        def create(self, **kw):
+            appels["modele"] = kw["model"]
+            msg = types.SimpleNamespace(content="Texte rédigé [1].")
+            return types.SimpleNamespace(choices=[types.SimpleNamespace(message=msg)])
+
+    monkeypatch.setitem(sys.modules, "openai", types.SimpleNamespace(OpenAI=FauxClient))
+    arg = generer(BASE, Contexte(selection=[("collectivite", "flotte")]))
+    texte = ia.rediger(arg, BASE, "cle", "test", fournisseur="albert", modele="claude-sonnet-5-5")
+    assert texte == "Texte rédigé [1]."
+    assert appels["url"] == "https://albert.api.etalab.gouv.fr/v1"
+    assert appels["modele"] == "openweight-large"
