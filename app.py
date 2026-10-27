@@ -95,6 +95,8 @@ with onglet_gen:
         relativiser = c1.checkbox("Ordres de grandeur (comparaison automobile)", value=False)
         catalogue = c2.checkbox("Tableau des vélis disponibles", value=True)
         niveaux = c2.checkbox("Afficher les niveaux de preuve", value=True)
+        style = "redige" if st.radio("Mise en forme", ["Texte rédigé", "Liste à puces (fiche de travail)"],
+                                     horizontal=True) == "Texte rédigé" else "liste"
         conseils = st.checkbox("Ajouter des conseils de présentation (note interne)", value=True)
         max_preuves = st.slider("Nombre d'arguments clés", 4, 15, 9)
 
@@ -107,6 +109,7 @@ with onglet_gen:
             st.session_state["arg"] = generer(base, ctx)
             st.session_state["ctx"] = ctx
             st.session_state["niveaux"] = niveaux
+            st.session_state["style"] = style
         if not selection:
             st.info("Cochez au moins un objectif pour générer un argumentaire.")
 
@@ -115,12 +118,15 @@ with onglet_gen:
         if arg:
             for a in arg.avertissements:
                 st.warning(a)
-            md_complet = vers_markdown(arg, base, st.session_state.get("niveaux", True), inclure_notes=True)
-            md_diffusion = vers_markdown(arg, base, st.session_state.get("niveaux", True), inclure_notes=False)
+            md_complet = vers_markdown(arg, base, st.session_state.get("niveaux", True), inclure_notes=True,
+                                       style=st.session_state.get("style", "redige"))
+            md_diffusion = vers_markdown(arg, base, st.session_state.get("niveaux", True), inclure_notes=False,
+                                         style=st.session_state.get("style", "redige"))
             nom = f"argumentaire_xd_{dt.date.today().isoformat()}"
             b1, b2 = st.columns(2)
             b1.download_button("Télécharger en Word (.docx)",
-                               vers_docx(arg, base, st.session_state.get("niveaux", True)),
+                               vers_docx(arg, base, st.session_state.get("niveaux", True),
+                                         style=st.session_state.get("style", "redige")),
                                file_name=f"{nom}.docx", width="stretch",
                                mime="application/vnd.openxmlformats-officedocument.wordprocessingml.document")
             b2.download_button("Télécharger en Markdown (.md)", md_diffusion, file_name=f"{nom}.md",

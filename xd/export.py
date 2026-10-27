@@ -13,17 +13,52 @@ VERT = RGBColor(0x1F, 0x6B, 0x52)
 GRIS = RGBColor(0x66, 0x66, 0x66)
 
 
-def vers_docx(arg: Argumentaire, base, afficher_niveaux: bool = True, inclure_notes: bool = False) -> bytes:
+def _tableau_docx(doc, df):
+    table = doc.add_table(rows=1, cols=len(df.columns))
+    table.style = "Light Grid Accent 1"
+    for j, c in enumerate(df.columns):
+        table.rows[0].cells[j].text = str(c)
+    for _, row in df.iterrows():
+        cells = table.add_row().cells
+        for j, v in enumerate(row):
+            cells[j].text = "" if v is None else str(v)
+    for row in table.rows:
+        for cell in row.cells:
+            for para in cell.paragraphs:
+                for r in para.runs:
+                    r.font.size = Pt(8.5)
+
+
+def vers_docx(arg: Argumentaire, base, afficher_niveaux: bool = True, inclure_notes: bool = False,
+              style: str = "redige") -> bytes:
     doc = Document()
-    style = doc.styles["Normal"]
-    style.font.name = "Calibri"
-    style.font.size = Pt(10.5)
+    normal = doc.styles["Normal"]
+    normal.font.name = "Calibri"
+    normal.font.size = Pt(10.5)
 
     t = doc.add_heading(arg.titre, level=0)
     for r in t.runs:
         r.font.color.rgb = VERT
     p = doc.add_paragraph(arg.sous_titre)
     p.runs[0].italic = True
+
+    if style == "redige":
+        from .redaction import en_prose
+        for titre, elements in en_prose(arg, afficher_niveaux, inclure_notes):
+            h = doc.add_heading(titre, level=1)
+            for r in h.runs:
+                r.font.color.rgb = VERT
+            for el in elements:
+                if el[0] == "p":
+                    para = doc.add_paragraph(el[1])
+                    para.alignment = WD_ALIGN_PARAGRAPH.JUSTIFY
+                elif el[0] == "h":
+                    doc.add_paragraph().add_run(el[1]).bold = True
+                elif el[0] == "table":
+                    if el[1]:
+                        doc.add_paragraph().add_run(el[1]).italic = True
+                    _tableau_docx(doc, el[2])
+        return _fin_docx(doc, arg, base, afficher_niveaux)
 
     for s in arg.sections:
         if s.note_interne and not inclure_notes:
@@ -82,6 +117,10 @@ def vers_docx(arg: Argumentaire, base, afficher_niveaux: bool = True, inclure_no
                             for r in para.runs:
                                 r.font.size = Pt(8.5)
 
+    return _fin_docx(doc, arg, base, afficher_niveaux)
+
+
+def _fin_docx(doc, arg, base, afficher_niveaux):
     h = doc.add_heading("Sources", level=1)
     for r in h.runs:
         r.font.color.rgb = VERT
@@ -92,9 +131,9 @@ def vers_docx(arg: Argumentaire, base, afficher_niveaux: bool = True, inclure_no
         para = doc.add_paragraph(f"[{num}] {src.get('auteur', '')}, {src.get('titre', sid)}, {src.get('date', '')}{url}{statut}")
         para.runs[0].font.size = Pt(9)
     if afficher_niveaux:
-        n = doc.add_paragraph("Niveaux de preuve : donnée mesurée, retour de terrain, texte en vigueur, estimation, "
-                              "projection, objectif du programme. Estimations et projections reposent sur les hypothèses "
-                              "des documents cités.")
+        n = doc.add_paragraph("Les mentions « estimation », « projection » et « objectif » signalent des chiffres qui "
+                              "reposent sur les hypothèses des documents cités ; les autres chiffres sont des données "
+                              "mesurées, des retours de terrain ou des textes en vigueur.")
         n.runs[0].italic = True
         n.runs[0].font.size = Pt(8.5)
         n.alignment = WD_ALIGN_PARAGRAPH.LEFT

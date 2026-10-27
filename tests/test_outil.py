@@ -95,3 +95,17 @@ def test_redaction_albert_simulee(monkeypatch):
     assert texte == "Texte rédigé [1]."
     assert appels["url"] == "https://albert.api.etalab.gouv.fr/v1"
     assert appels["modele"] == "openweight-large"
+
+
+def test_style_redige_sans_puces():
+    for sel in tous_les_objectifs():
+        arg = generer(BASE, Contexte(selection=[sel], territoires_30veli=["Le Mans"], inclure_relativiser=True))
+        md = vers_markdown(arg, BASE, style="redige")
+        corps = md.split("## Sources")[0]
+        assert not any(l.startswith(("- ", "* ", "> ")) for l in corps.split("\n")), sel
+        separateurs = [l for l in corps.split("\n") if l.startswith(("|:", "|-"))]
+        assert len(separateurs) <= 1, sel
+        import docx, io
+        d = docx.Document(io.BytesIO(vers_docx(arg, BASE, style="redige")))
+        assert not any(p.style.name == "List Bullet" for p in d.paragraphs), sel
+        assert len(d.tables) <= 1, sel

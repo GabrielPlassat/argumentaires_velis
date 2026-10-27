@@ -48,6 +48,10 @@ Règles impératives :
 7. Ton : clair, factuel, concret, orienté vers l'action. Pas de superlatifs non étayés.
 8. Structure : titre, introduction courte adaptée à la cible, 3 à 5 parties avec intertitres,
    réponses aux objections si fournies, appel à l'action, puis la liste « Sources » reprise telle quelle.
+9. Forme : rédaction littérale en paragraphes suivis, avec des transitions entre les idées.
+   N'utilise AUCUNE liste à puces ni liste numérotée dans le corps du texte (seule la liste « Sources »
+   finale reste numérotée). Au plus UN tableau, uniquement s'il apporte une comparaison utile
+   (par exemple quelques vélis adaptés avec prix et location) ; sinon, aucun tableau.
 """
 
 

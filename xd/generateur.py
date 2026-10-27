@@ -319,8 +319,23 @@ def _cite(b: Bloc) -> str:
     return f" [{b.ref}{page}]"
 
 
-def vers_markdown(arg: Argumentaire, base: Base, afficher_niveaux: bool = True, inclure_notes: bool = True) -> str:
+def vers_markdown(arg: Argumentaire, base: Base, afficher_niveaux: bool = True, inclure_notes: bool = True,
+                  style: str = "redige") -> str:
     lignes = [f"# {arg.titre}", f"*{arg.sous_titre}*", ""]
+    if style == "redige":
+        from .redaction import en_prose
+        for titre, elements in en_prose(arg, afficher_niveaux, inclure_notes):
+            lignes += [f"## {titre}", ""]
+            for el in elements:
+                if el[0] == "p":
+                    lignes += [el[1], ""]
+                elif el[0] == "h":
+                    lignes += [f"**{el[1]}**", ""]
+                elif el[0] == "table":
+                    if el[1]:
+                        lignes += [f"*{el[1]}*", ""]
+                    lignes += [el[2].to_markdown(index=False), ""]
+        return "\n".join(lignes + _sources_markdown(arg, base, afficher_niveaux))
     for s in arg.sections:
         if s.note_interne and not inclure_notes:
             continue
@@ -348,14 +363,18 @@ def vers_markdown(arg: Argumentaire, base: Base, afficher_niveaux: bool = True, 
                     lignes += ["", f"**{b.titre}**", ""]
                 lignes += [b.tableau.to_markdown(index=b.tableau.index.name is not None), ""]
         lignes.append("")
-    lignes += ["## Sources", ""]
+    return "\n".join(lignes + _sources_markdown(arg, base, afficher_niveaux))
+
+
+def _sources_markdown(arg: Argumentaire, base: Base, afficher_niveaux: bool) -> list:
+    lignes = ["## Sources", ""]
     for num, sid in arg.references:
         src = base.sources.get(sid, {})
         statut = "" if src.get("diffusion") == "publique" else " — *document interne*"
         url = f" — {src['url']}" if src.get("url") else ""
         lignes.append(f"{num}. {src.get('auteur', '')}, *{src.get('titre', sid)}*, {src.get('date', '')}{url}{statut}")
     if afficher_niveaux:
-        lignes += ["", "*Niveaux de preuve : donnée mesurée, retour de terrain, texte en vigueur, estimation, "
-                   "projection, objectif du programme. Les estimations et projections reposent sur les hypothèses "
-                   "des documents cités.*"]
-    return "\n".join(lignes)
+        lignes += ["", "*Les mentions « estimation », « projection » et « objectif » signalent des chiffres qui reposent "
+                   "sur les hypothèses des documents cités ; les autres chiffres sont des données mesurées, des retours "
+                   "de terrain ou des textes en vigueur.*"]
+    return lignes
