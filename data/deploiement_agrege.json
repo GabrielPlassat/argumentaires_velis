@@ -1,0 +1,52 @@
+{
+  "date_preparation": "2026-10-27",
+  "nb_reponses": 68,
+  "profils": {
+    "une collectivité, EPCI": 19,
+    "une entreprise": 15,
+    "un professionnel d'un autre domaine": 13,
+    "un acteur de la mobilité inclusive": 11,
+    "un acteur du tourisme": 4,
+    "un acteur de la santé, des aides à la personne": 4,
+    "un acteur de la logistique, livraison": 2
+  },
+  "regions": {
+    "Auvergne Rhône Alpes": 12,
+    "Occitanie": 9,
+    "Ile de France": 8,
+    "Nouvelle Aquitaine": 7,
+    "Grand Est": 7,
+    "Pays de la Loire": 7,
+    "Bretagne": 5,
+    "Bourgogne Franche Comté": 3,
+    "Provence Alpes Côte d'Azur": 3,
+    "Hauts de France": 3,
+    "Normandie": 2,
+    "Centre Val de Loire": 2
+  },
+  "types_projet": {
+    "J'expérimente": 36,
+    "Je déploie": 22,
+    "Je découvre": 10
+  },
+  "velis_envisages_total": 1010,
+  "velis_envisages_mediane": 4.0,
+  "velis_envisages_max": 500,
+  "contact_constructeur_oui": 44,
+  "contact_maintenance_oui": 31,
+  "contact_territoire_oui": 50,
+  "vehicules_les_plus_cites": {
+    "La bagnole": 23,
+    "Sorean": 19,
+    "Weez Lite": 18,
+    "MIDIPILE": 16,
+    "BOB": 12,
+    "Ulive": 12,
+    "KOZI": 10,
+    "Woodybus": 10,
+    "CIRCLE": 9,
+    "ACT3.6 RANDO": 9,
+    "Ouicycle": 9,
+    "MS TRACKER": 8
+  }
+}

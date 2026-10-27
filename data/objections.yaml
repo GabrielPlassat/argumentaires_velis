@@ -1,0 +1,78 @@
+# Objections fréquentes et éléments de réponse.
+# reponse : texte de réponse (rédigé, sans chiffre : les chiffres viennent des preuves citées)
+# preuves : identifiants de preuves à citer
+# stats   : blocs statistiques calculés à joindre (voir xd/stats.py)
+# vigilance : ce qu'il faut reconnaître honnêtement
+
+- id: OBJ-PRIX
+  question: "Un véli coûte aussi cher qu'une petite voiture."
+  reponse: "À l'achat, l'écart est réel pour les quadricycles, mais le coût complet se joue à l'usage : énergie, entretien, assurance et dépréciation sont nettement plus faibles. La location longue durée, la prime CEE et les achats groupés réduisent la marche d'entrée."
+  preuves: [ECO-08, ECO-02, ECO-04, CEE-01, FIN-03]
+  stats: [catalogue_prix]
+  vigilance: "Les voitures électriques restent beaucoup plus aidées à l'achat ; les coûts complets du véli sont en partie des coûts cibles."
+
+- id: OBJ-SECURITE
+  question: "Ce n'est pas sûr sur nos routes."
+  reponse: "Les testeurs signalent surtout un manque de visibilité et des aménagements inadaptés, que des mesures légères (vitesse, signalétique, bandes multifonctionnelles) améliorent. L'acceptation progresse avec la familiarité et l'usage ; le choix des itinéraires compte autant que le véhicule."
+  preuves: [EXP-09, AMG-02, AMG-01]
+  stats: [difficultes]
+  vigilance: "Le ressenti d'insécurité sur les axes à 80-90 km/h est réel ; un observatoire de la sécurité des vélis reste à créer."
+
+- id: OBJ-AUTONOMIE
+  question: "L'autonomie ne suffira pas."
+  reponse: "La plupart des usages ciblés, notamment professionnels, restent sous 50 km par jour ; dimensionner la batterie au besoin réel est précisément ce qui rend le véli léger et économique."
+  preuves: [PRO-01, PRO-02]
+  stats: [distances]
+
+- id: OBJ-METEO
+  question: "Personne ne l'utilisera l'hiver ou sous la pluie."
+  reponse: "Les carnets de bord montrent des bilans très majoritairement positifs y compris par temps de pluie ; la saisonnalité pèse toutefois sur l'usage, d'où l'intérêt de modèles carénés selon le territoire."
+  preuves: [EXP-05]
+  stats: [meteo]
+  vigilance: "Les testeurs étaient volontaires ; la saisonnalité a réduit l'usage dans VIMOB."
+
+- id: OBJ-RELIEF
+  question: "Notre territoire est trop vallonné."
+  reponse: "Le relief oriente le choix du modèle : certains vélis à assistance 25 km/h manquent de puissance en côte, d'autres sont dimensionnés pour. Une expérimentation permet de vérifier l'adéquation avant d'acheter."
+  preuves: [PRO-03, EXP-12]
+  stats: [catalogue_prix]
+  vigilance: "Des testeurs ont signalé un manque de puissance en côte sur certains modèles (Acticycle, Urbaner, Biro)."
+
+- id: OBJ-MAINTENANCE
+  question: "Qui va les entretenir et les réparer ?"
+  reponse: "Les vélis sont conçus simples et réparables ; dans les expérimentations, la maintenance s'est le plus souvent réglée à distance avec un réparateur local en lien avec le constructeur. Structurer un réseau local de maintenance reste un chantier du programme."
+  preuves: [EXP-02, ASS-04, ASS-03]
+  stats: [deploiement_maintenance]
+  vigilance: "Le service après-vente des jeunes constructeurs est un frein identifié."
+
+- id: OBJ-MATURITE
+  question: "Ce sont des prototypes, pas des véhicules fiables."
+  reponse: "Plusieurs dizaines de modèles sont commandables, avec des délais et capacités annoncés par les constructeurs ; les prototypes de l'XD servent à tester les usages avant industrialisation."
+  preuves: [PUB-12, PUB-09, PUB-10]
+  stats: [catalogue_prix]
+  vigilance: "Délais, prix et capacités sont déclaratifs ; plusieurs modèles ne sont commandables qu'à partir de 2026-2027."
+
+- id: OBJ-IMAGE
+  question: "Personne ne voudra être vu dedans."
+  reponse: "Dans les carnets de bord, la fierté et les réactions positives de l'entourage figurent parmi les bénéfices cités ; mettre en avant des usagers valorisés (soignants, artisans, agents) renforce cette image."
+  preuves: [SHS-01, COM-04]
+  stats: [avantages]
+  vigilance: "La recherche VICOMOD montre une image ambivalente de certains tricycles chez les jeunes actifs."
+
+- id: OBJ-ORGANISATION
+  question: "Organiser un test va nous prendre trop de temps."
+  reponse: "Commencer par une mise à disposition aux agents ou salariés est le plus simple ; guide, fiche projet et outils existent, et des associations peuvent porter la logistique et le recueil des retours."
+  preuves: [EXP-02, EXP-03, EXP-12, ASS-01]
+  vigilance: "Le prêt aux habitants demande des moyens humains importants."
+
+- id: OBJ-VE
+  question: "Pourquoi pas simplement une voiture électrique ?"
+  reponse: "Pour les trajets du quotidien, le véli rend l'essentiel du service avec beaucoup moins de matière, de batterie et d'énergie, à un coût public par tonne de CO2 évitée plus faible et avec une chaîne de valeur largement européenne."
+  preuves: [ENV-01, ECO-07, PUB-01, ECO-03]
+  vigilance: "Le véli n'offre pas la polyvalence d'une voiture : il complète, il ne remplace pas tous les usages."
+
+- id: OBJ-HOMOLOGATION
+  question: "Les démarches d'homologation sont trop incertaines."
+  reponse: "Les modèles du catalogue sont commercialisés dans leur catégorie ; pour les nouveaux modèles, l'homologation L6e/L7e demande au moins six mois, et un cadre d'expérimentation avant homologation est proposé par le programme."
+  preuves: [FIN-01]
+  vigilance: "L'homologation reste longue et coûteuse pour les petits constructeurs."

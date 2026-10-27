@@ -1,0 +1,149 @@
+# Ressources documentaires (liens) proposées « pour aller plus loin ».
+# Leur contenu n'est PAS encore intégré à la base de preuves : l'outil les cite comme lectures
+# recommandées, sans en tirer de chiffres. Utiliser outils/importer_wiki.py pour les intégrer.
+# themes : objectifs / cas d'usage concernés.
+
+- id: R-SYNTH30
+  titre: "Synthèse des retours de l'expérimentation 30 vélis (wiki XD)"
+  url: "https://wikixd.fabmob.io/wiki/Synth%C3%A8se_30velis"
+  themes: [experimentation, flotte, inclusion, tourisme]
+- id: R-EXPE30
+  titre: "Expérimentation 30 VELI (wiki Fabrique des Mobilités)"
+  url: "https://wiki.lafabriquedesmobilites.fr/wiki/Experimentation_30VELI"
+  themes: [experimentation]
+- id: R-30VELI
+  titre: "Site de suivi des trajets et retours des testeurs"
+  url: "https://30veli.fabmob.io/"
+  themes: [experimentation, communication]
+- id: R-FICHES-CONSTR
+  titre: "Fiches constructeurs (évaluations)"
+  url: "https://cloud.fabmob.io/s/ycgCLppemkRg4b8"
+  themes: [achat, flotte]
+- id: R-FICHES-TERR
+  titre: "Fiches territoires (évaluations)"
+  url: "https://cloud.fabmob.io/s/sGzwJrBDzNym9cT"
+  themes: [experimentation, collectivite]
+- id: R-BILAN-FABMOB
+  titre: "Bilan de la FabMob sur les expérimentations"
+  url: "https://cloud.fabmob.io/s/7gHH4AS9XB2ARCo"
+  themes: [experimentation]
+- id: R-SAMOA
+  titre: "Retour d'expérience Véli'MIN (SAMOA, logistique)"
+  url: "https://cloud.fabmob.io/s/zxbCn4BrinR4ojP"
+  themes: [logistique]
+- id: R-AVIGNON
+  titre: "Grand Avignon : expérimentation tourisme (wiki XD)"
+  url: "https://wikixd.fabmob.io/wiki/Communaut%C3%A9_d%27Agglom%C3%A9ration_du_Grand_Avignon"
+  themes: [tourisme]
+- id: R-DECARMOB
+  titre: "Décarmob'reizh : cas d'usage technicentre SNCF (wiki XD)"
+  url: "https://wikixd.fabmob.io/wiki/D%C3%A9carmob%27reizh_-_Pr%C3%A9sentation_du_cas_d%27usage_technicentre_SNCF"
+  themes: [flotte, entreprise]
+- id: R-LEMANS
+  titre: "Le Mans Métropole : fiche et bilan (Véli'Test auxiliaires de vie)"
+  url: "https://cloud.fabmob.io/s/CrdGLjPfj5QzDPR"
+  themes: [flotte, sante_social]
+- id: R-NIORT
+  titre: "Centre hospitalier de Niort (wiki XD)"
+  url: "https://wikixd.fabmob.io/wiki/Centre_Hospitalier_de_Niort"
+  themes: [flotte, entreprise, sante_social]
+- id: R-INVD
+  titre: "Bilan Vitamines 12 In'VD (trajets du quotidien)"
+  url: "https://cloud.fabmob.io/s/zx6pnTdEGDsHSLk"
+  themes: [quotidien, inclusion, association]
+- id: R-CANAUX
+  titre: "Canaux de Bretagne"
+  url: "https://cloud.fabmob.io/s/TgQZBmx3iie68pC"
+  themes: [tourisme, flotte]
+- id: R-TRANSMUSICALES
+  titre: "Vélis dans les festivals (Collectif des festivals)"
+  url: "https://www.lecollectifdesfestivals.org/collectif/nos-projets/projet-velis/"
+  themes: [communication, tourisme]
+- id: R-PROJETS
+  titre: "Tableau des projets XD (hors véhicules)"
+  url: "https://wikixd.fabmob.io/wiki/Tableau_des_projets_XD_(hors_v%C3%A9hicule)"
+  themes: [partenaire, recherche]
+- id: R-MOBRURALES
+  titre: "Rapport de recherche Mobilités rurales"
+  url: "https://cloud.fabmob.io/s/csHdoA9goSqgwAP"
+  themes: [recherche, communication, rural]
+- id: R-VIMOB
+  titre: "Rapport de recherche VIMOB"
+  url: "https://cloud.fabmob.io/s/iEzbByYHrGMHpqM"
+  themes: [recherche, quotidien]
+- id: R-8FREINS
+  titre: "Les 8 freins au développement des vélis"
+  url: "https://cloud.fabmob.io/s/qyGXSrag6ATsPSr"
+  themes: [politique, financeur, partenaire]
+- id: R-BILANTHEM
+  titre: "Bilan thématique France 2030 (ADEME Éditions)"
+  url: "https://librairie.ademe.fr/mobilite-et-transports/8845-bilan-thematique-de-l-extreme-defi-des-prototypes-et-de-l-industrie-des-vehicules-intermediaires-9791029726392.html"
+  themes: [politique, financeur, partenaire, ecole, recherche]
+- id: R-EXPO
+  titre: "Panneaux d'exposition XD"
+  url: "https://cloud.fabmob.io/s/5NLPjrM7WxY7BLQ"
+  themes: [communication]
+- id: R-MOTION
+  titre: "Motion design XD"
+  url: "https://cloud.fabmob.io/s/GQ5xkWkkTwzMdf9"
+  themes: [communication]
+- id: R-GUIDE
+  titre: "Guide des expérimentations (GitBook)"
+  url: "https://xd-ademe-mobilite.gitbook.io/guide-xd-experimentations-desvev%C3%A9hicules_interm%C3%A9diaires"
+  themes: [experimentation, collectivite, association, entreprise]
+- id: R-FINANCEMENT
+  titre: "Acteurs qui proposent des solutions de financement des vélis (wiki XD)"
+  url: "https://wikixd.fabmob.io/wiki/Acteurs_qui_proposent_des_solutions_de_financement_des_v%C3%A9hicules_interm%C3%A9diaires"
+  themes: [achat, flotte, financeur]
+- id: R-TROUVERFIN
+  titre: "Trouver des financements pour votre projet XD (wiki XD)"
+  url: "https://wikixd.fabmob.io/wiki/Trouver_des_financements_pour_votre_projet_XD"
+  themes: [experimentation, association, ecole]
+- id: R-CEREMA
+  titre: "Conseils Cerema pour la circulation des vélis (wiki XD)"
+  url: "https://wikixd.fabmob.io/wiki/Conseils_CEREMA_pour_cr%C3%A9er_les_conditions_favorables_%C3%A0_la_circulation_des_v%C3%A9hicules_interm%C3%A9diaires"
+  themes: [amenagement]
+- id: R-VELIMAP
+  titre: "Outil cartographique des aménagements prioritaires (velimap)"
+  url: "https://velimap.someware.fr/"
+  themes: [amenagement]
+- id: R-WIDGET
+  titre: "Calculateur de consommation par trajet (Mobility widget XD)"
+  url: "https://www.mobilitywidgets.com/extreme-defi/embed"
+  themes: [achat, flotte, quotidien]
+- id: R-ACTIONSTERR
+  titre: "Actions des collectivités pour créer les conditions favorables (wiki XD)"
+  url: "https://wikixd.fabmob.io/wiki/Cat%C3%A9gorie:Actioncollterr"
+  themes: [collectivite, amenagement]
+- id: R-VELIPRO
+  titre: "Massifier les usages PRO des vélis (wiki XD)"
+  url: "https://wikixd.fabmob.io/wiki/Massifier_les_usages_PRO_des_V%C3%A9lis"
+  themes: [entreprise, logistique, flotte]
+- id: R-AVELIPRO
+  titre: "Univers pro AVELI"
+  url: "https://www.aveli.org/univers-pro"
+  themes: [entreprise, logistique, flotte, achat]
+- id: R-ECOLES
+  titre: "GT Écoles et universités (wiki XD)"
+  url: "https://wikixd.fabmob.io/wiki/GT_Ecoles_et_Universit%C3%A9s"
+  themes: [ecole]
+- id: R-FESTIVALS
+  titre: "Partenariat avec les festivals (wiki XD)"
+  url: "https://wikixd.fabmob.io/wiki/Partenariat_avec_les_Festivals_pour_faire_connaitre_les_v%C3%A9hicules_interm%C3%A9diaires"
+  themes: [communication]
+- id: R-DECOUVRIR
+  titre: "Faire découvrir les vélis dans votre territoire (wiki XD)"
+  url: "https://wikixd.fabmob.io/wiki/Faire_d%C3%A9couvrir_les_v%C3%A9lis_dans_votre_territoire"
+  themes: [communication, collectivite, association]
+- id: R-GTINVEST
+  titre: "GT Investissement et financement (wiki XD)"
+  url: "https://wikixd.fabmob.io/wiki/GT_Investissement_et_financement_XD"
+  themes: [financeur, investisseur]
+- id: R-PARTENAIRES
+  titre: "Tableau des partenaires de l'XD (wiki XD)"
+  url: "https://wikixd.fabmob.io/wiki/Tableau_des_partenaires_de_l'XD"
+  themes: [partenaire]
+- id: R-LOM
+  titre: "Verdissement des flottes (LOM) et vélis (wiki XD)"
+  url: "https://wikixd.fabmob.io/wiki/Verdissement_des_flottes_LOM"
+  themes: [flotte]

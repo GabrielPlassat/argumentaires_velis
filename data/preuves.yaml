@@ -1,0 +1,925 @@
+# Base de preuves de l'outil.
+# Chaque preuve = un fait sourcé, rédigé pour être repris tel quel dans un argumentaire.
+#
+# niveau (niveau de preuve, affiché dans l'argumentaire) :
+#   mesure        donnée observée ou comptée (expérimentations, statistiques publiques, budgets)
+#   terrain       retour d'expérience qualitatif documenté
+#   reglementaire texte en vigueur
+#   estimation    calcul ou hypothèse d'un rapport (à présenter comme tel)
+#   projection    scénario prospectif
+#   objectif      cible fixée par le programme
+#
+# limite : précaution à afficher avec le chiffre (honnêteté de l'argumentaire).
+# Les preuves calculées à partir des données (30 vélis, catalogue, enquête) sont produites
+# par le code (xd/stats.py) et ne figurent pas ici.
+
+# ─────────────────────────── ÉCONOMIE ET COÛT TOTAL ───────────────────────────
+- id: ECO-01
+  titre: "Un coût d'usage de l'ordre de 1 € aux 100 km"
+  texte: "Le coût d'usage d'un véli est inférieur à 1 € aux 100 km pour les vélos augmentés, d'environ 1 € pour les quadricycles légers carénés à pédalage et de 1 à 2 € aux 100 km pour les quadricycles électriques L6e et L7e."
+  source: shift_velis_2026
+  page: "p. 3"
+  niveau: estimation
+  themes: [economie]
+
+- id: ECO-02
+  titre: "Coût annuel d'un véli 45 km/h actif comparé à une citadine"
+  texte: "Dans le calcul du Bilan XD, un véli actif 45 km/h coûte environ 80 € d'électricité, 500 € d'assurance et 100 € d'entretien par an, contre 1 000 € de carburant, 600 € d'assurance et 467 € d'entretien pour une citadine thermique neuve ; sa dépréciation annuelle (environ 317 € : 11 500 € d'achat, 2 000 € de valeur résiduelle, 30 ans) est 2,5 fois plus faible que celle de la citadine (800 €)."
+  source: bilan_xd_2022_25
+  page: "p. 65-67"
+  niveau: estimation
+  limite: "Coûts cibles du véli (30 ans de durée de vie et reconditionnement supposés). Le tableau de dépréciation du Bilan affiche 183 €/an, incohérent avec ses propres hypothèses ; la valeur de 317 €/an, reprise dans son tableau de coûts annuels, est retenue."
+  themes: [economie, tco]
+
+- id: ECO-03
+  titre: "89 % des dépenses restent dans la zone euro"
+  texte: "Sur 30 ans, 89 % des coûts d'un véli sont dépensés dans la zone euro, contre 77 % pour une voiture électrique, en raison de batteries beaucoup plus petites."
+  source: bilan_xd_2022_25
+  page: "p. 67"
+  niveau: estimation
+  themes: [economie, souverainete]
+
+- id: ECO-04
+  titre: "Un coût total de possession divisé par près de 4 pour un usage professionnel"
+  texte: "Selon l'étude de l'AVELI reprise sur aveli.org, un véli utilisé à titre professionnel permet de diviser quasiment par 4 le coût total de possession."
+  source: aveli_univers_pro
+  page: "section « Segmentation de la gamme »"
+  niveau: estimation
+  themes: [economie, tco, flotte, pro]
+
+- id: ECO-11
+  titre: "Environ 5 000 € de coût total économisés par an et par véhicule"
+  texte: "L'étude de l'AVELI citée dans le Bilan XD estime que, pour une entreprise, un véli fait économiser environ 5 000 € de coût total de possession par an par rapport à une citadine électrique."
+  source: bilan_xd_2022_25
+  page: "p. 136"
+  niveau: estimation
+  themes: [economie, tco, flotte, pro]
+
+- id: ECO-05
+  titre: "Le budget domicile-travail pèse plus lourd hors des villes"
+  texte: "Les Français dépensent en moyenne 107 € par mois pour leurs trajets domicile-travail, 130 € en périurbain et 139 € en zone rurale ; les ouvriers sont la profession qui dépense le plus (115 €)."
+  source: bilan_thematique_2025
+  page: "p. 3 (IPSOS, 2019)"
+  niveau: mesure
+  themes: [economie, social, rural]
+
+- id: ECO-06
+  titre: "Le transport, 21 % du revenu des ménages les plus modestes"
+  texte: "Les ménages consacrent en moyenne 13,6 % de leur revenu disponible aux transports ; cette part monte à 21 % pour les 10 % de ménages les plus modestes (Insee, 2017)."
+  source: bilan_xd_2022_25
+  page: "p. 71"
+  niveau: mesure
+  themes: [economie, social]
+
+- id: ECO-07
+  titre: "70 à 90 % de la valeur d'usage d'une voiture"
+  texte: "Un véli conforme au cahier des charges XD apporte probablement 70 à 90 % de la valeur d'usage d'une automobile sur les trajets quotidiens, pour un temps de trajet allongé de l'ordre de 10 à 20 %."
+  source: bilan_xd_2022_25
+  page: "p. 125"
+  niveau: estimation
+  themes: [economie, usage]
+
+- id: ECO-08
+  titre: "Le prix d'achat reste le premier frein"
+  texte: "Les vélis L6e et L7e restent peu compétitifs à l'achat face aux voitures (catégorie M1), qui bénéficient d'aides pouvant atteindre 7 000 € ; l'ADEME propose de porter la prime CEE des quadricycles d'environ 250-500 € à 1 500-2 000 € et de développer des offres de location intégrées."
+  source: huit_freins
+  page: "frein n°1"
+  niveau: terrain
+  themes: [economie, objection_prix, politique]
+
+- id: ECO-09
+  titre: "Une location constatée de 400 à 500 € par mois en expérimentation"
+  texte: "Pour une expérimentation, In'VD (PNR des Grands Causses) indique un coût de location de 400 à 500 € par mois selon le véhicule, l'assurance et la durée."
+  source: cr_semxd_expe
+  page: "§ In'VD"
+  niveau: terrain
+  themes: [economie, experimentation]
+
+- id: ECO-10
+  titre: "Un cahier des charges « 10 fois moins coûteux »"
+  texte: "Le cahier des charges de l'eXtrême Défi vise des véhicules transportant 1 à 2 personnes et 100 kg (ou 3 personnes et leurs sacs) 10 fois moins coûteux qu'une automobile en intégrant toutes les dépenses, conçus pour durer, être réparés et reconditionnés."
+  source: bilan_thematique_2025
+  page: "p. 4"
+  niveau: objectif
+  themes: [economie, programme]
+
+# ───────────────────────────── ENVIRONNEMENT ─────────────────────────────
+- id: ENV-01
+  titre: "2,4 à 4,5 fois moins d'impact environnemental au kilomètre (Ecobalyse)"
+  texte: "Avec le simulateur Ecobalyse (méthode PEF, 16 indicateurs), un véli L7e totalise 380 points d'impact aux 100 km, un véli L6e 439 et un véli actif 395, contre 1 044 pour une voiture électrique, 1 496 pour une voiture essence et 1 703 pour un utilitaire diesel."
+  source: ecobalyse_note
+  page: "§ 3.1"
+  niveau: estimation
+  limite: "Module véhicules en version bêta ; coefficient de durabilité non activé pour les voitures."
+  themes: [environnement]
+
+- id: ENV-02
+  titre: "Une empreinte carbone de 10 à 30 g CO2 par km sur le cycle de vie"
+  texte: "Sur l'ensemble du cycle de vie, l'empreinte carbone est inférieure à 10 g CO2/km pour un véli actif type VAE, de 10 à 20 g/km pour un quadricycle léger caréné, d'environ 20 g/km pour un L6e et de 20 à 30 g/km pour un L7e."
+  source: shift_velis_2026
+  page: "p. 3"
+  niveau: estimation
+  themes: [environnement, climat]
+
+- id: ENV-03
+  titre: "Environ 2 t CO2 sur 10 ans, contre 25 t pour une voiture thermique"
+  texte: "Fabrication et usage cumulés sur 10 ans représentent de l'ordre de 2 t CO2 pour un véli électrique (batterie de 5 kWh), 10 à 12 t pour une voiture électrique (50 kWh) et 25 t pour une voiture thermique."
+  source: bilan_xd_2022_25
+  page: "p. 118"
+  niveau: estimation
+  themes: [environnement, climat]
+
+- id: ENV-04
+  titre: "Des externalités négatives 10 à 25 fois plus faibles"
+  texte: "Le coût total des externalités négatives (CO2, pollution de l'air, bruit) est estimé entre 20 et 100 € par an pour un véli, contre 150 à 450 € pour une voiture électrique et 800 à 2 500 € pour une voiture thermique."
+  source: bilan_xd_2022_25
+  page: "p. 118"
+  niveau: estimation
+  themes: [environnement, sante, politique]
+
+- id: ENV-05
+  titre: "Un parc de 3,5 millions de vélis : 25 TWh et 5 Mt CO2 évités par an"
+  texte: "Remplacer 3,5 millions de voitures thermiques (environ 10 % du parc) par des vélis consommerait 0,7 TWh d'électricité, économiserait 25 TWh d'énergie, soit plus d'un quart de l'objectif de 86 TWh fixé par le SGPE, et éviterait environ 5 Mt CO2 par an."
+  source: bilan_xd_2022_25
+  page: "p. 5 et p. 182"
+  niveau: projection
+  themes: [environnement, climat, energie, politique]
+
+- id: ENV-06
+  titre: "Une réduction d'un facteur 5 à 10 des émissions et des matières"
+  texte: "Le programme XD retient pour les vélis une réduction d'un facteur 5 à 10 des émissions de gaz à effet de serre et des besoins en matières par rapport à la voiture, et une division d'un facteur 5 à 10 de la dépendance aux matériaux critiques."
+  source: synthese_xd_mai26
+  page: "diapositive « Le potentiel »"
+  niveau: estimation
+  themes: [environnement, souverainete]
+
+- id: ENV-07
+  titre: "Les véhicules légers peuvent couvrir jusqu'à 76 % des trajets motorisés"
+  texte: "L'étude européenne LEV4Climate (DLR) estime pour l'Allemagne que jusqu'à 76 % des trajets motorisés, soit la moitié des kilomètres, pourraient être réalisés en véhicules électriques légers, avec des émissions au kilomètre en moyenne 8 fois plus faibles que la voiture."
+  source: bilan_xd_2022_25
+  page: "p. 138"
+  niveau: projection
+  themes: [environnement, potentiel]
+
+- id: ENV-08
+  titre: "Moins de poids, moins d'usure des routes"
+  texte: "Avec un poids à l'essieu de 50 à 200 kg, les vélis demandent moins de matériaux pour construire des voies et usent beaucoup moins les chaussées, ce qui espace l'entretien ; ils sont 10 à 100 fois moins lourds qu'une voiture."
+  source: bilan_xd_2022_25
+  page: "p. 86 et p. 117"
+  niveau: estimation
+  themes: [amenagement, voirie, environnement]
+
+- id: ENV-09
+  titre: "Le score de durabilité peut diviser l'impact affiché par 3"
+  texte: "Dans Ecobalyse, le coefficient de durabilité (réparabilité, garantie batterie, pièces détachées) fait varier le score d'un véli d'un facteur 3 pour un objet physiquement identique ; même dans le pire cas testé, le véli 45 km/h reste moins impactant qu'une voiture électrique."
+  source: ecobalyse_note
+  page: "§ 4"
+  niveau: estimation
+  limite: "Module bêta."
+  themes: [environnement, reparabilite, achat_public]
+
+# ─────────────────────── EFFICACITÉ DE LA DÉPENSE PUBLIQUE ───────────────────────
+- id: PUB-01
+  titre: "Le coût public de la tonne de CO2 évitée"
+  texte: "Avec une aide de 4 000 €, une voiture électrique revient à 222 € d'argent public par tonne de CO2 évitée ; pour un véli, le coût est de 181 € avec la même aide, 113 € avec 2 500 € et 45 € avec 1 000 €."
+  source: bilan_xd_2022_25
+  page: "p. 122"
+  niveau: estimation
+  limite: "Hypothèses : 15 000 km/an, 10 ans, substitution d'une voiture thermique."
+  themes: [politique, climat, financement_public]
+
+- id: PUB-02
+  titre: "La rentabilité de l'euro public investi"
+  texte: "Chaque euro d'aide à l'achat d'une voiture électrique réduit les externalités négatives d'environ 2,1 € par an ; pour un véli aidé à 2 000 €, le ratio atteint 4,6 € par an, et 9,2 € avec une aide de 1 000 €."
+  source: bilan_xd_2022_25
+  page: "p. 120-121"
+  niveau: estimation
+  themes: [politique, financement_public]
+
+- id: PUB-03
+  titre: "Un coût d'abattement négatif face à une voiture neuve"
+  texte: "Remplacer une voiture thermique neuve à 20 000 € par un véli à 8 000 € économise de l'argent tout en évitant du CO2 : le coût d'abattement est de -365 € par tonne (-152 €/t pour un véli à 15 000 €) ; face à une voiture d'occasion, il devient positif (+152 €/t pour un véli à 15 000 €), ce qui justifie une aide ciblée."
+  source: bilan_xd_2022_25
+  page: "p. 123-124"
+  niveau: estimation
+  themes: [politique, climat, economie]
+
+- id: PUB-04
+  titre: "Le budget public de l'eXtrême Défi"
+  texte: "L'eXtrême Défi Mobilité, lancé en 2022, a été soutenu à hauteur de 6 M€ par l'ADEME et de 15 M€ par France 2030."
+  source: bilan_thematique_2025
+  page: "p. 3"
+  niveau: mesure
+  themes: [programme, politique]
+
+- id: PUB-05
+  titre: "Ordre de grandeur : le soutien public à l'automobile"
+  texte: "Entre 2018 et 2024, l'État a consacré 9,4 Md€ au soutien de la demande automobile (bonus, prime à la conversion, leasing social) et 8,2 Md€ au soutien de l'offre ; les 21 M€ publics de l'eXtrême Défi représentent environ 0,1 % de ces 17,6 Md€."
+  source: senat_auto_2026
+  page: "p. 66 (d'après la Cour des comptes)"
+  niveau: mesure
+  limite: "Périmètres et objectifs différents : comparaison d'ordre de grandeur, pas de mise en concurrence."
+  themes: [politique, relativiser]
+
+- id: PUB-06
+  titre: "Le leasing social automobile : 7 000 € d'aide par contrat"
+  texte: "Le leasing social automobile apporte jusqu'à 7 000 € d'aide par contrat (loyer plafonné à 200 € par mois) ; 46 729 ménages en ont bénéficié pour 272 M€ en 2024-2025."
+  source: cour_comptes_auto_2026
+  page: "p. 46 et annexe 6"
+  niveau: mesure
+  limite: "À rapprocher de l'aide de 1 500 € par véli proposée dans le scénario XD 2025-2028."
+  themes: [politique, relativiser, financement_public]
+
+- id: PUB-07
+  titre: "La SDMP 2026 encourage l'émergence d'une filière"
+  texte: "La Stratégie de développement des mobilités propres 2026 indique que l'émergence d'une filière de véhicules intermédiaires pourra être encouragée, les cite comme levier de décarbonation de nouveaux segments et annonce un groupe de travail national piloté en lien avec l'ADEME."
+  source: sdmp_2026
+  page: "p. 21, 35, 76"
+  niveau: reglementaire
+  themes: [politique, gouvernance]
+
+- id: PUB-08
+  titre: "Un écart de 4 à 5 Mt CO2 sans solution dans les transports"
+  texte: "Le SGPE constate un écart de 4 à 5 Mt CO2 par an entre la trajectoire des transports et les objectifs nationaux ; la facture fossile des transports représente 70 à 80 M€ par jour."
+  source: bilan_thematique_2025
+  page: "p. 3"
+  niveau: mesure
+  themes: [politique, climat, energie]
+
+- id: PUB-09
+  titre: "Trois années d'appels à projets"
+  texte: "En trois ans, 231 projets ont été déposés et 150 financés : 58 concepts, 155 prototypes de véhicules, 6 composants et 13 projets d'industrialisation couvrant toutes les catégories L et VAE."
+  source: bilan_thematique_2025
+  page: "p. 4"
+  niveau: mesure
+  themes: [programme, industrie]
+
+- id: PUB-10
+  titre: "L'industrialisation : 15,3 M€ d'aide pour 49,3 M€ de projets"
+  texte: "L'AAP Industrie des véhicules intermédiaires soutient 13 PME à hauteur de 15,3 M€ pour un budget total de 49,3 M€ (projets de 30 mois en moyenne) : chaque euro public accompagne environ 3,2 € de projets."
+  source: bilan_thematique_2025
+  page: "p. 14"
+  niveau: mesure
+  themes: [programme, industrie, financement]
+
+- id: PUB-11
+  titre: "Les prototypes : 93 véhicules pour 2,76 M€"
+  texte: "Les 54 projets de l'AAP Prototypes 2024, aidés à hauteur de 2,76 M€ pour un budget total de 5,87 M€, réalisent 93 véhicules et 6 composants ; la mutualisation permet de prototyper en moins de 10 mois dans la plupart des cas."
+  source: bilan_thematique_2025
+  page: "p. 9, 10 et 14"
+  niveau: mesure
+  themes: [programme, industrie]
+
+- id: PUB-12
+  titre: "Une quarantaine de vélis produits en France commercialisés en 2026"
+  texte: "Le programme recense une quarantaine de types de vélis produits en France et commercialisés en 2026."
+  source: synthese_xd_mai26
+  page: "diapositive « Partenaires de l'XD »"
+  niveau: mesure
+  themes: [programme, offre, industrie]
+
+- id: PUB-13
+  titre: "Toutes les aides AAP 2022-2025"
+  texte: "Sur l'ensemble des AAP véhicules (idéation 2022-2024, prototypes 2023-2024, industrialisation 2024-2025, habitacle 2025), 260 projets ont été déposés et 169 financés, pour 20,9 M€ d'aides accordées sur 44,4 M€ de projets retenus."
+  source: excel_aap
+  page: "onglet « Synthèse AAP Véhicules »"
+  niveau: mesure
+  themes: [programme, financement]
+
+# ────────────────────────── FLOTTES, LOM, CEE ──────────────────────────
+- id: LOM-01
+  titre: "Les quadricycles comptent désormais dans le verdissement des flottes"
+  texte: "Depuis la loi de finances 2026, les véhicules des catégories L6e et L7e sont intégrés dans la définition des véhicules à faibles et très faibles émissions du code de l'environnement : ils comptent dans les objectifs de verdissement des flottes professionnelles et publiques."
+  source: lom_verdissement
+  page: "art. L224-6-1 et L224-6-2"
+  niveau: reglementaire
+  themes: [flotte, lom, reglementation]
+
+- id: LOM-02
+  titre: "Des objectifs de renouvellement croissants"
+  texte: "Les objectifs de verdissement des flottes atteignent 70 % des renouvellements en 2030 pour les entreprises de plus de 100 véhicules légers et pour les collectivités de plus de 20 véhicules légers."
+  source: bilan_xd_2022_25
+  page: "p. 104"
+  niveau: reglementaire
+  limite: "Seuils et calendrier à vérifier dans le texte en vigueur (Légifrance)."
+  themes: [flotte, lom, reglementation]
+
+- id: LOM-03
+  titre: "Deux tiers des entreprises en retard sur la LOM"
+  texte: "En 2022, 66 % des entreprises soumises à l'obligation de verdissement n'atteignaient pas le premier objectif de 10 % (Transport & Environnement, 2023)."
+  source: bilan_xd_2022_25
+  page: "p. 104"
+  niveau: mesure
+  themes: [flotte, lom]
+
+- id: LOM-04
+  titre: "Plus de 2 millions de véhicules de flotte à verdir"
+  texte: "Plus de 2 millions de véhicules de flottes restent à verdir, 3,8 millions de voitures portent une vignette Crit'Air 4 ou 5 et près de 2 millions appartiennent aux 10 % de ménages les plus modestes."
+  source: bilan_xd_2022_25
+  page: "p. 139"
+  niveau: mesure
+  themes: [flotte, potentiel, social]
+
+- id: CEE-01
+  titre: "Une prime CEE pour l'achat ou la location de quadricycles"
+  texte: "La fiche CEE TRA-EQ-130 finance l'achat ou la location d'au moins 24 mois d'un quadricycle électrique neuf L6e ou L7e ; selon le barème retenu dans le Bilan XD, la prime atteint environ 1 205 € pour un L7e et 683 € pour un L6e acquis par une collectivité, 1 021 € et 578 € pour une personne morale, 510 € et 266 € pour un particulier."
+  source: cee_tra_eq_130
+  page: "montants calculés dans le Bilan XD, p. 131"
+  niveau: reglementaire
+  limite: "Montants en € dépendant du prix des CEE au moment de l'opération."
+  themes: [flotte, financement, economie]
+
+# ─────────────────────── EXPÉRIMENTATIONS ET USAGES ───────────────────────
+- id: EXP-01
+  titre: "30 vélis testés dans plus de 20 territoires"
+  texte: "Grâce aux véhicules disponibles à la location et aux prototypes issus des AAP, des expérimentations de 30 vélis ont été menées dans plus de vingt territoires ruraux et périurbains pour faire essayer, échanger entre acteurs et comprendre les changements de pratiques."
+  source: bilan_thematique_2025
+  page: "p. 6"
+  niveau: mesure
+  themes: [experimentation]
+
+- id: EXP-02
+  titre: "Les agents publics, le cas le plus simple à organiser"
+  texte: "Mettre des vélis à disposition des agents d'une collectivité est plus simple que le prêt aux habitants, qui demande contrat et état des lieux et mobilise de l'ordre d'1 ETP pour 7 à 8 vélis ; la maintenance se règle en général à distance, les territoires trouvant facilement un réparateur en lien avec le constructeur."
+  source: bilan_xd_2022_25
+  page: "p. 89"
+  niveau: terrain
+  themes: [experimentation, flotte, organisation, objection_maintenance]
+
+- id: EXP-03
+  titre: "La logistique d'une expérimentation est à anticiper"
+  texte: "Livrer et déplacer les véhicules, adapter les modèles aux besoins et croiser les données de suivi représentent une charge importante qu'il faut prévoir dès le départ."
+  source: bilan_xd_2022_25
+  page: "p. 89"
+  niveau: terrain
+  themes: [experimentation, organisation]
+
+- id: EXP-04
+  titre: "Annoncer les volumes 12 mois à l'avance"
+  texte: "Passer de 30 à 300 vélis suppose que chaque constructeur multiplie ses capacités par 10 : un tel programme doit être annoncé idéalement 12 mois avant les commandes pour permettre les investissements."
+  source: bilan_xd_2022_25
+  page: "p. 101"
+  niveau: terrain
+  themes: [experimentation, industrie, commande]
+
+- id: EXP-05
+  titre: "Les testeurs découvrent une palette d'alternatives"
+  texte: "Dans la recherche-action VIMOB (UBO, Pays de Brest et Grand Pic Saint-Loup, 20 foyers équipés pendant un an), les testeurs ont réalisé que la voiture n'était pas la seule solution ; l'expérience s'est en revanche arrêtée vite pour les foyers en logement collectif sans stationnement protégé, et la saison a fortement pesé sur l'usage."
+  source: bilan_xd_2022_25
+  page: "p. 79-80"
+  niveau: terrain
+  themes: [experimentation, recherche, usage, stationnement]
+
+- id: EXP-06
+  titre: "Aides à domicile : un test en conditions réelles au Mans"
+  texte: "Avec Véli'Test, cinq auxiliaires de vie de l'association Ai'Dom (Le Mans) ont utilisé pendant un mois des vélis (Urbaner, Karbikes, Biro, Weez) pour leurs tournées et leurs trajets domicile-travail, afin de démontrer la faisabilité technique et économique et de tester la location ou le paiement à l'usage."
+  source: bilan_xd_2022_25
+  page: "p. 108"
+  niveau: terrain
+  themes: [experimentation, sante_social, pro, flotte]
+
+- id: EXP-07
+  titre: "Véli'MIN : la logistique urbaine depuis le MIN de Nantes"
+  texte: "De novembre 2024 à mai 2025, Véli'MIN a testé quatre véhicules électriques à deux ou trois roues pour livrer commerces et restaurants du centre de Nantes depuis le MIN, avec un protocole d'évaluation portant sur l'ergonomie, la performance, l'acceptabilité et les bénéfices économiques et environnementaux."
+  source: aveli_univers_pro
+  page: "section « VéliMIN »"
+  niveau: terrain
+  themes: [experimentation, logistique, pro]
+
+- id: EXP-08
+  titre: "Une demande qui dépasse l'offre de véhicules à l'essai"
+  texte: "Au Grand Pic Saint-Loup, l'appel à testeurs a réuni 25 personnes puis plus de 70 après réouverture ; la Weez (quadricycle 80 km/h) est la plus demandée."
+  source: cr_semxd_expe
+  page: "§ Grand Pic Saint Loup"
+  niveau: terrain
+  themes: [experimentation, demande]
+
+- id: EXP-09
+  titre: "L'acceptation progresse avec l'usage et les aménagements"
+  texte: "Selon le Cerema, l'acceptabilité des vélis augmente avec l'expérience d'usage, la familiarité visuelle et l'aménagement de l'espace public ; les territoires qui ont travaillé itinéraires, réductions de vitesse et signalétique sont les mieux disposés à les accueillir."
+  source: bilan_xd_2022_25
+  page: "p. 133"
+  niveau: terrain
+  themes: [amenagement, securite, experimentation]
+
+- id: EXP-10
+  titre: "Des services partagés qui trouvent leur public"
+  texte: "Autoplume (Figeac) propose des vélis aux salariés et aux employeurs : 25 personnes l'ont testé sur leurs trajets domicile-travail ; LOC'AMI 48 (Lozère) met des vélis en autopartage pour l'insertion, les agents publics, les professionnels de santé, les artisans et les touristes."
+  source: bilan_xd_2022_25
+  page: "p. 111"
+  niveau: terrain
+  themes: [inclusion, autopartage, experimentation]
+
+- id: EXP-11
+  titre: "Occitanie : cinq projets territoriaux tourisme, quotidien, professionnel"
+  texte: "L'AMI Véli Vélo en Occitanie accompagne cinq projets : location touristique (Haute-Bigorre), événementiel et rétrofit (Tarn-sur-Agout), agents municipaux et domicile-travail (Blagnac), mobilités professionnelles et touristiques (Narbonne), mobilité transfrontalière, santé et insertion (Pyrénées-Orientales)."
+  source: bilan_xd_2022_25
+  page: "p. 87"
+  niveau: terrain
+  themes: [experimentation, tourisme, flotte, inclusion]
+
+- id: EXP-12
+  titre: "Un guide et des outils prêts à l'emploi"
+  texte: "Les territoires disposent d'un guide d'expérimentation (issu de l'expérience d'In'VD), d'une fiche projet, d'un outil cartographique des aménagements prioritaires, d'un calculateur de consommation par trajet et du site de suivi 30 vélis."
+  source: bilan_xd_2022_25
+  page: "p. 91-97"
+  niveau: terrain
+  themes: [experimentation, outils]
+
+- id: EXP-13
+  titre: "Un déploiement de 200 à 300 vélis en B2B en 2026"
+  texte: "Le programme prévoit en 2026 un déploiement de 200 à 300 vélis auprès d'acteurs professionnels, publics et privés."
+  source: synthese_xd_mai26
+  page: "diapositive « Sujets 2026 »"
+  niveau: objectif
+  themes: [programme, deploiement]
+
+# ─────────────────────── RECHERCHE EN SCIENCES HUMAINES ───────────────────────
+- id: SHS-01
+  titre: "Comment parler des vélis en milieu rural"
+  texte: "L'enquête ethnographique « Mobilités rurales » recommande de ne pas présenter le véli comme un remplaçant de la voiture ni de parler de rapidité, mais de mettre en avant l'absence de frais (carburant, entretien coûteux), l'autonomie et la liberté, les loisirs et la convivialité, la réparabilité accessible à tous et des profils d'usagers valorisés (chef d'entreprise, soignant, alternant)."
+  source: bilan_xd_2022_25
+  page: "p. 77-78"
+  niveau: terrain
+  themes: [communication, rural, recherche]
+
+- id: SHS-02
+  titre: "Réparabilité et prix : les deux craintes des ruraux"
+  texte: "Habitués à des voitures très durables, les habitants enquêtés craignent de ne pas pouvoir entretenir des véhicules électriques ; le prix des vélis est un obstacle pour les plus contraints, qui ne dépensent pas plus de 2 000 à 5 000 € pour une voiture."
+  source: bilan_xd_2022_25
+  page: "p. 76"
+  niveau: terrain
+  themes: [objection_prix, rural, reparabilite, recherche]
+
+- id: SHS-03
+  titre: "La sécurité n'est pas un bon angle d'accroche"
+  texte: "Les routes de campagne étant perçues comme hostiles aux petits véhicules, la recherche conseille de ne pas mobiliser d'abord le thème de la sécurité et d'éviter les débats clivants sur les pistes cyclables, au profit de l'aménagement des voies existantes et de cartes d'itinéraires."
+  source: bilan_xd_2022_25
+  page: "p. 77-78"
+  niveau: terrain
+  themes: [communication, securite, amenagement]
+
+- id: SHS-04
+  titre: "Le « deuxième véhicule » est souvent celui des femmes"
+  texte: "En milieu rural, les femmes obtiennent souvent le permis plus tard et privilégient une voiture polyvalente ; penser le véli comme « deuxième voiture » revient souvent à viser la voiture des femmes."
+  source: bilan_xd_2022_25
+  page: "p. 77"
+  niveau: terrain
+  themes: [inclusion, recherche, conception]
+
+- id: SHS-05
+  titre: "Un Français adulte sur deux empêché ou renonçant à conduire"
+  texte: "Selon l'enquête Forum Vies Mobiles - Crédoc 2024-2025, un adulte sur deux est confronté à une forme d'empêchement ou de renoncement à la conduite (absence de permis, incapacité, appréhension de la nuit, de la météo ou de la ville)."
+  source: bilan_xd_2022_25
+  page: "p. 70"
+  niveau: mesure
+  themes: [inclusion, social]
+
+# ─────────────────────────── SOCIAL, SANTÉ, EMPLOI ───────────────────────────
+- id: SOC-01
+  titre: "15 millions de personnes en précarité mobilité"
+  texte: "15 millions de personnes sont en situation de précarité mobilité (baromètre Wimoov 2025) ; la moitié des personnes en insertion a déjà refusé un emploi faute de solution de mobilité, et 28 % de celles qui en ont trouvé un l'ont abandonné pour cette raison."
+  source: bilan_thematique_2025
+  page: "p. 3"
+  niveau: mesure
+  themes: [inclusion, social, emploi]
+
+- id: SOC-02
+  titre: "Les ruraux parcourent un tiers de distance en plus"
+  texte: "Les habitants des territoires ruraux parcourent chaque jour 33 % de distance de plus que la moyenne nationale et concentrent 42 % des émissions directes de GES des déplacements quotidiens, pour 33 % de la population."
+  source: bilan_xd_2022_25
+  page: "p. 69-70"
+  niveau: mesure
+  themes: [rural, climat, social]
+
+- id: SOC-03
+  titre: "Insertion : un véhicule simple élargit le bassin d'emploi"
+  texte: "La simplicité des vélis réduit leur coût d'exploitation et celui de l'accompagnement des personnes éloignées de l'emploi, qui accèdent ainsi à des zones d'emploi plus larges."
+  source: bilan_thematique_2025
+  page: "p. 8-9"
+  niveau: terrain
+  themes: [inclusion, emploi]
+
+- id: SOC-04
+  titre: "Pédaler, c'est moins d'arrêts maladie"
+  texte: "Les salariés cyclistes ont 15 % d'arrêts maladie en moins ; les vélis actifs, à pédalage assisté, prolongent ces bénéfices de l'activité physique à des trajets plus longs ou chargés."
+  source: bilan_xd_2022_25
+  page: "p. 64"
+  niveau: mesure
+  themes: [sante, rse, flotte]
+
+- id: SOC-05
+  titre: "La santé, un bénéfice chiffré par l'OMS"
+  texte: "Une étude de l'OMS citée par le Bilan XD estime le bénéfice de santé publique des mobilités actives entre 0,5 et 1,3 € par kilomètre parcouru."
+  source: bilan_xd_2022_25
+  page: "p. 119"
+  niveau: estimation
+  themes: [sante, politique]
+
+- id: SOC-06
+  titre: "Jusqu'à 75 000 emplois pour une filière à maturité"
+  texte: "L'AVELI estime à environ 75 000 ETP les emplois nécessaires pour concevoir, fabriquer, distribuer, entretenir et reconditionner un marché français de 1 à 1,5 million de vélis neufs par an ; une étude emploi est engagée avec Mobilians en 2026."
+  source: bilan_xd_2022_25
+  page: "p. 136 ; bilan thématique p. 9"
+  niveau: projection
+  themes: [emploi, industrie, territoire]
+
+- id: SOC-07
+  titre: "Aide à domicile : 3 milliards de km par an en voiture"
+  texte: "Les services d'aide à la personne (1,4 million de professionnels) parcourent environ 3 milliards de km par an de domicile en domicile, surtout en voiture, soit 700 000 t CO2 par an (1,8 Mt avec le domicile-travail) ; les frais kilométriques couvrent mal l'entretien des voitures de salariés modestes et le secteur peine à recruter."
+  source: aveli_univers_pro
+  page: "section « Auxiliaires de vie » (d'après The Shift Project)"
+  niveau: estimation
+  themes: [sante_social, pro, flotte, emploi]
+
+# ─────────────────────── INDUSTRIE ET SOUVERAINETÉ ───────────────────────
+- id: IND-01
+  titre: "Plus de 80 % de la valeur produite en Europe"
+  texte: "Efficients, éco-conçus, réparables et reconditionnables, les vélis peuvent être produits à plus de 80 % en valeur dans l'Union européenne."
+  source: bilan_thematique_2025
+  page: "p. 3"
+  niveau: estimation
+  themes: [souverainete, industrie, emploi]
+
+- id: IND-02
+  titre: "Souverains sur tous les composants sauf les cellules"
+  texte: "Avec les vélos, les vélis sont les seuls véhicules qui peuvent être souverains en Europe sur tous les composants sauf les cellules de batterie, dont ils embarquent environ 10 fois moins qu'une voiture et qui sont réparables à l'échelle de la cellule."
+  source: bilan_xd_2022_25
+  page: "p. 126"
+  niveau: estimation
+  themes: [souverainete, industrie, robustesse]
+
+- id: IND-03
+  titre: "Un assemblage possible au plus près des clients"
+  texte: "Avec peu de composants, un véli peut être assemblé de façon distribuée chez des professionnels équipés de peu d'outils — garage, fablab, PME ou service technique d'une collectivité — ce qui limite les investissements lourds et permet de démarrer avec de petites séries."
+  source: bilan_thematique_2025
+  page: "p. 5"
+  niveau: terrain
+  themes: [industrie, emploi, territoire, usine_distribuee]
+
+- id: IND-04
+  titre: "Quatre usines pilotes pour des usines distribuées"
+  texte: "Quatre lauréats de l'AAP Industrie démontrent la viabilité de leur industrialisation via une usine pilote destinée à être répliquée au plus près des lieux d'usage, avec un réseau local de vente et de maintenance."
+  source: bilan_thematique_2025
+  page: "p. 12"
+  niveau: terrain
+  themes: [industrie, usine_distribuee, territoire]
+
+- id: IND-05
+  titre: "La logistique en milieu contraint, cible de la moitié des projets industriels"
+  texte: "La moitié des dix lauréats « véhicules » de l'AAP Industrie visent la logistique en milieu contraint, avec des véhicules sobres en énergie, faciles à réparer, plus étroits que les utilitaires classiques et modulaires."
+  source: bilan_thematique_2025
+  page: "p. 12"
+  niveau: mesure
+  themes: [logistique, industrie, pro]
+
+- id: IND-06
+  titre: "Des composants mutualisés entre constructeurs"
+  texte: "Une vingtaine de constructeurs ont déclaré les composants qu'ils souhaitent mutualiser ; 19 composants prioritaires ont été retenus (contrôleur moteur, pack batterie, connectique, éclairage, freinage, direction, suspension...) et des cahiers des charges communs sont en cours."
+  source: seminaire_indus_2026
+  page: "atelier 2"
+  niveau: terrain
+  themes: [industrie, mutualisation, partenaire]
+
+- id: IND-07
+  titre: "La « vallée de la mort » de l'industrialisation"
+  texte: "Les besoins de levée de fonds des constructeurs se concentrent entre 1 et 3 M€ (18 demandes) et entre 0,5 et 1 M€ (17 demandes), pour l'homologation, l'outillage, les pré-séries puis le besoin en fonds de roulement ; à l'approche de la production, les besoins sont le plus souvent revus à la hausse."
+  source: seminaire_indus_2026
+  page: "atelier 1"
+  niveau: mesure
+  themes: [financement, industrie, investisseur]
+
+- id: IND-08
+  titre: "La Chine développe deux fois plus vite"
+  texte: "Les constructeurs chinois de véhicules électriques passent du concept au lancement en 18 à 24 mois contre 40 à 53 mois en Occident ; plus de la moitié de cet avantage tient à des choix d'organisation transposables en Europe (plateformes partagées, ingénierie « suffisante », clusters)."
+  source: note_chine
+  page: "synthèse"
+  niveau: estimation
+  themes: [souverainete, industrie, urgence]
+
+- id: IND-09
+  titre: "Un marché européen des quadricycles encore étroit"
+  texte: "Le marché des quadricycles légers et lourds représente environ 60 000 unités en Europe en 2025, dont la moitié en France ; les L7e restent marginaux (quelques centaines d'unités par an)."
+  source: shift_velis_2026
+  page: "p. 4"
+  niveau: mesure
+  themes: [marche, industrie]
+
+- id: IND-10
+  titre: "Une trajectoire réaliste : 3,5 millions de vélis en 10 ans"
+  texte: "Au regard des besoins et des capacités des constructeurs, un parc de 3,5 millions de vélis avec 400 000 à 500 000 ventes annuelles pourrait être visé d'ici 10 ans ; le programme retient un potentiel de 30 000 à 300 000 vélis par an sur 5 à 10 ans, d'abord en B2B."
+  source: bilan_xd_2022_25
+  page: "p. 139 ; synthèse mai 2026"
+  niveau: projection
+  themes: [marche, potentiel, industrie]
+
+- id: IND-11
+  titre: "Des composants industrialisés en France"
+  texte: "Deux lauréats industrialisent des composants conçus pour les vélis — batteries (Batconnect, projet EvoBatSwap) et amortisseurs (Soben, projet AMOREVELI) — avec un service de proximité aux constructeurs."
+  source: bilan_thematique_2025
+  page: "p. 13"
+  niveau: terrain
+  themes: [industrie, souverainete, partenaire]
+
+# ─────────────────────────── USAGES PROFESSIONNELS ───────────────────────────
+- id: PRO-01
+  titre: "Des usages professionnels sous 50 km par jour"
+  texte: "Les usages professionnels visés parcourent souvent moins de 50 km par jour et jamais plus de 100 km : inutile d'équiper un véhicule pour une autonomie qui n'est jamais utilisée, ce qui rend le véli rationnel."
+  source: veliprogramme
+  page: "§ 2.2.1"
+  niveau: terrain
+  themes: [pro, flotte, objection_autonomie]
+
+- id: PRO-02
+  titre: "Un marché professionnel de plus de 3 millions d'unités"
+  texte: "Le marché des usages professionnels dépasse 3 millions d'unités en France (le parc de véhicules utilitaires légers gérés par les entreprises compte à lui seul 3,2 millions de véhicules) et 69 % des kilométrages journaliers professionnels sont inférieurs à 100 km."
+  source: veliprogramme
+  page: "synthèse ; aveli.org/univers-pro"
+  niveau: estimation
+  themes: [pro, potentiel, flotte]
+
+- id: PRO-03
+  titre: "Quand un véli se justifie plutôt qu'un vélo"
+  texte: "Un véli professionnel se justifie si au moins une condition est remplie : charge supérieure aux capacités d'un vélo, dénivelé de plus de 5 %, deux personnes ou plus, un trajet quotidien de plus de 10 km, portions à plus de 45 km/h ou sans piste cyclable, ou besoin de protection contre les intempéries."
+  source: veliprogramme
+  page: "§ 2.3.1"
+  niveau: terrain
+  themes: [pro, choix_vehicule]
+
+- id: PRO-04
+  titre: "Jusqu'à 350 kg avec une remorque"
+  texte: "Un véli actif peut transporter jusqu'à 150 kg, jusqu'à 300 kg au-delà de 25 km/h, et l'ajout d'une remorque motorisée porte la charge utile jusqu'à 350 kg."
+  source: aveli_univers_pro
+  page: "§ 3"
+  niveau: terrain
+  themes: [pro, logistique, choix_vehicule]
+
+- id: PRO-05
+  titre: "Maintenir l'accès des professionnels aux ZFE"
+  texte: "Les vélis permettent de concilier réduction des émissions et maintien de l'accès des artisans, commerçants et professions libérales aux centres et aux zones à faibles émissions."
+  source: veliprogramme
+  page: "§ 4.1.2"
+  niveau: terrain
+  themes: [pro, logistique, zfe]
+
+- id: PRO-06
+  titre: "Le programme Marguerite finance déjà des alternatives pour les artisans"
+  texte: "Le programme Marguerite, financé par les CEE, accompagne artisans et commerçants vers des véhicules alternatifs avec environ 1 000 € par véhicule."
+  source: veliprogramme
+  page: "§ 4.2.1 et § 4.4"
+  niveau: terrain
+  themes: [pro, financement]
+
+# ─────────────────────────────── TOURISME ───────────────────────────────
+- id: TOU-01
+  titre: "Le Grand Avignon mise sur une découverte lente de la Provence"
+  texte: "L'office de tourisme du Grand Avignon expérimente des vélis pour une découverte touristique lente et bas carbone par les petites routes, en complément des transports en commun, au départ de gares ou de parkings relais."
+  source: cr_semxd_expe
+  page: "§ Grand Avignon"
+  niveau: terrain
+  themes: [tourisme, experimentation]
+
+- id: TOU-02
+  titre: "Les loisirs, trajets les plus valorisés"
+  texte: "Les déplacements les plus valorisés sont ceux liés aux loisirs et à la convivialité : la recherche recommande de convoquer cet imaginaire pour présenter les vélis."
+  source: bilan_xd_2022_25
+  page: "p. 78"
+  niveau: terrain
+  themes: [tourisme, communication]
+
+- id: TOU-03
+  titre: "Des offres touristiques déjà en place"
+  texte: "Zigzaguer en Corrèze propose depuis des années des découvertes du territoire en vélis ; Tourm'en Véli (Haute-Bigorre) développe la location touristique et saisonnière."
+  source: bilan_xd_2022_25
+  page: "p. 87 et p. 110"
+  niveau: terrain
+  themes: [tourisme]
+
+# ─────────────────────── AMÉNAGEMENT ET CIRCULATION ───────────────────────
+- id: AMG-01
+  titre: "Intégrer les vélis à la réflexion sur les modes actifs"
+  texte: "La note Cerema-ADEME recommande d'intégrer les vélis dans la relecture du réseau routier sous l'angle des modes actifs, sans investissement coûteux ni restriction de circulation, en orientant les vélis vers les axes les plus adaptés."
+  source: bilan_xd_2022_25
+  page: "p. 95-96"
+  niveau: terrain
+  themes: [amenagement, voirie]
+
+- id: AMG-02
+  titre: "Des aménagements légers déjà testés"
+  texte: "Bandes multifonctionnelles à la place des bandes médianes (Clunisois), réduction de vitesse, zones 30, panneaux B14 et bandes rugueuses (Grand Pic Saint-Loup, Grands Causses) sont les principaux leviers testés pour la circulation des vélis."
+  source: bilan_xd_2022_25
+  page: "p. 132-133"
+  niveau: terrain
+  themes: [amenagement, voirie, securite]
+
+- id: AMG-03
+  titre: "Ouvrir certaines voies selon la vitesse des vélis"
+  texte: "Trois évolutions sont proposées : autoriser les L5e et L7e sur les voies rapides, ouvrir les aménagements cyclables aux quadricycles assimilés VAE de moins de 1,20 m de large (comme en Allemagne ou en Belgique) et les voies vertes aux L1e, L2e et L6e."
+  source: huit_freins
+  page: "frein n°6"
+  niveau: terrain
+  themes: [amenagement, reglementation]
+
+- id: AMG-04
+  titre: "Un outil pour repérer les aménagements prioritaires"
+  texte: "Un outil cartographique (velimap) note les liaisons entre communes de A à E selon la vitesse limite, la largeur, les pistes cyclables, l'accidentalité et le trafic, pour cibler les aménagements prioritaires."
+  source: bilan_xd_2022_25
+  page: "p. 93"
+  niveau: terrain
+  themes: [amenagement, outils]
+
+- id: AMG-05
+  titre: "Moins de stationnement, plus de surfaces libérées"
+  texte: "Plus compacts, les vélis permettent de réduire les surfaces de stationnement, de désimperméabiliser une partie des revêtements et de fluidifier le trafic en transportant plus de personnes par unité de surface."
+  source: bilan_thematique_2025
+  page: "p. 8"
+  niveau: estimation
+  themes: [amenagement, stationnement]
+
+- id: AMG-06
+  titre: "Le département, gestionnaire des routes secondaires"
+  texte: "Pour un département, créer les conditions favorables aux vélis réduit les dépenses d'entretien de voirie (véhicules 10 à 100 fois moins lourds), redonne du pouvoir d'achat, baisse les externalités et ouvre des activités touristiques sur les réseaux de modes actifs."
+  source: bilan_xd_2022_25
+  page: "p. 86"
+  niveau: estimation
+  themes: [amenagement, voirie, departement]
+
+# ──────────────────────────── COMMUNICATION ────────────────────────────
+- id: COM-01
+  titre: "Le beau, le bon, le vrai"
+  texte: "Le discours sur les vélis doit s'appuyer sur le beau (désirable, associé au plaisir), le bon (peu de matière et d'énergie, longue durée de vie, entretien possible soi-même) et le vrai (transparence sur la performance environnementale, l'état de la batterie et les réparations)."
+  source: bilan_xd_2022_25
+  page: "p. 129-130"
+  niveau: terrain
+  themes: [communication]
+
+- id: COM-02
+  titre: "Convaincre par la preuve : « faire pour dire »"
+  texte: "Face au rejet des solutions abstraites, les expérimentations territoriales démontrent par la preuve qu'on peut remplacer des fourgonnettes thermiques par des vélis, et donnent la parole à des usagers convaincus."
+  source: veliprogramme
+  page: "§ 3.2"
+  niveau: terrain
+  themes: [communication, experimentation]
+
+- id: COM-03
+  titre: "Une audience déjà construite"
+  texte: "Le programme a produit 47 articles de blog, plus de 20 vidéos et un film, plus de 1 000 pages de wiki, plus de 200 ateliers et 10 conférences et salons, et revendique plus de 3 millions de personnes touchées."
+  source: synthese_xd_mai26
+  page: "annexe « Les livrables »"
+  niveau: mesure
+  themes: [communication, programme]
+
+- id: COM-04
+  titre: "Les vélis attirent l'attention"
+  texte: "Les expéditions (Diagonale du Plein, Nouvelle Aventure Mobile, Supercycle) ont confirmé la propension des vélis à capter l'attention : un support de communication en soi."
+  source: aveli_univers_pro
+  page: "section « Le design, ça paie »"
+  niveau: terrain
+  themes: [communication, rse]
+
+# ──────────────────────────── ÉCOLES ET RECHERCHE ────────────────────────────
+- id: EDU-01
+  titre: "Construire une filière de formation"
+  texte: "Constituer une filière professionnelle depuis les lycées professionnels jusqu'à l'enseignement supérieur est l'un des huit freins identifiés : il s'agit de créer des formations à tous les niveaux et d'utiliser les vélis comme support pédagogique."
+  source: huit_freins
+  page: "frein n°5"
+  niveau: terrain
+  themes: [ecole, emploi]
+
+- id: EDU-02
+  titre: "Une communauté éducative déjà engagée"
+  texte: "Avec la FabPéda, l'XD a constitué une communauté engagée dans l'intégration des véhicules intermédiaires dans les cursus, lancé des prototypes pédagogiques dans le supérieur, constitué une base d'établissements et réalisé près de 30 vidéos."
+  source: bilan_xd_2022_25
+  page: "p. 130"
+  niveau: terrain
+  themes: [ecole]
+
+- id: EDU-03
+  titre: "Des écoles et laboratoires déjà partenaires"
+  texte: "L'ENPC, l'INP Grenoble, l'ESTACA, l'École de design de Nantes et l'INSA/CNRS conduisent des projets avec le programme ; cinq projets de l'AAP Prototypes ont une vocation pédagogique."
+  source: synthese_xd_mai26
+  page: "diapositive « Sujets 2026 » ; bilan thématique p. 9"
+  niveau: terrain
+  themes: [ecole, recherche]
+
+- id: EDU-04
+  titre: "La recherche en SHS financée par l'XD"
+  texte: "Un AAP dédié aux laboratoires de sciences humaines et sociales (0,8 M€) finance trois projets PREVER (Mobilités rurales, VIMOB, VICOMOD) et un projet TEES sur les usages et les changements de comportement."
+  source: synthese_xd_mai26
+  page: "diapositive « Accompagner la demande »"
+  niveau: mesure
+  themes: [recherche]
+
+- id: EDU-05
+  titre: "Des questions de recherche ouvertes"
+  texte: "Plusieurs questions restent à documenter : comparabilité et représentativité des évaluations d'expérimentations, bénéfices santé des vélis actifs (projet VELI santé INSA Toulouse - LAAS-CNRS), sécurité (observatoire proposé avec le Cerema), effets emploi."
+  source: bilan_xd_2022_25
+  page: "p. 64 et p. 100"
+  niveau: terrain
+  themes: [recherche, sante, securite]
+
+- id: EDU-06
+  titre: "Les régions, compétentes pour la formation"
+  texte: "Les régions ont la charge de la formation à partir des lycées : les vélis impliquent de nouveaux métiers et formations, en lien avec le ministère de l'Éducation nationale."
+  source: bilan_xd_2022_25
+  page: "p. 87"
+  niveau: terrain
+  themes: [ecole, region]
+
+# ─────────────────────── FINANCEMENT ET PARTENAIRES ───────────────────────
+- id: FIN-01
+  titre: "Le capital, verrou de l'industrialisation"
+  texte: "Les constructeurs manquent de capitaux pour franchir l'étape très intensive en capital de l'industrialisation : convaincre financeurs publics et privés est un levier prioritaire."
+  source: huit_freins
+  page: "frein n°3"
+  niveau: terrain
+  themes: [financement, investisseur, industrie]
+
+- id: FIN-02
+  titre: "Des outils financiers à construire ensemble"
+  texte: "Le GT Financement propose des structures mutualisant financements et gestion de flottes, un fonds de garantie public ou mixte pour sécuriser le leasing, des couvertures d'assurance adaptées et des préventes pour donner de la visibilité sur la valeur résiduelle."
+  source: bilan_xd_2022_25
+  page: "p. 155"
+  niveau: terrain
+  themes: [financement, assurance, banque]
+
+- id: FIN-03
+  titre: "Des offres de location déjà disponibles"
+  texte: "Des opérateurs proposent déjà la location ou le leasing de vélis aux collectivités, entreprises et associations (Finance Mobilité, VoltandGo, Fleeta, Kilow, Pullco, Amigo, V-Loc...)."
+  source: bilan_xd_2022_25
+  page: "p. 155 ; note séminaire industrie"
+  niveau: terrain
+  themes: [financement, location]
+
+- id: FIN-04
+  titre: "Les vélis, des « projets ombrelle »"
+  texte: "Un déploiement de vélis produit des co-bénéfices multiples — santé, emploi local, formation, économies d'aménagement, réduction des émissions — qui justifient de les traiter comme des projets à fort effet d'entraînement dans un contexte budgétaire contraint."
+  source: veliprogramme
+  page: "§ 2.1"
+  niveau: terrain
+  themes: [financement, rse, politique]
+
+- id: FIN-05
+  titre: "Un capital public-privé par paliers"
+  texte: "Le VELIPROGRAMME propose une société de location de flottes (VELI-LOC) dont le capital passe de 100 % public au niveau national à majoritairement privé au niveau des territoires et des entreprises (mutuelles, investisseurs à impact, banques de réseau)."
+  source: veliprogramme
+  page: "§ 4.3.1"
+  niveau: projection
+  themes: [financement, investisseur, banque]
+
+- id: FIN-06
+  titre: "Les mutuelles peuvent valoriser l'impact santé"
+  texte: "La démarche VELI-GOOD invite mutuelles et acteurs de la prévention à valoriser les bénéfices santé des vélis (activité physique, moindre exposition aux polluants) par des bonus ou des programmes de prévention."
+  source: veliprogramme
+  page: "§ 4.3.3"
+  niveau: projection
+  themes: [financement, sante, assurance]
+
+- id: FIN-07
+  titre: "Un industriel déjà engagé : Start2Prod"
+  texte: "Start2Prod, filiale de Michelin co-financée par Michelin et l'ADEME, anime le groupe de travail sur la mutualisation des composants entre constructeurs."
+  source: seminaire_indus_2026
+  page: "atelier 2"
+  niveau: terrain
+  themes: [partenaire, industrie]
+
+- id: FIN-08
+  titre: "Un programme 2025-2028 chiffré"
+  texte: "Pour construire un système véli opérationnel en trois ans, le budget estimé est de 100 à 120 M€, dont 50 M€ d'aides à l'achat (1 500 € par véli pour 5 000, 10 000 puis 20 000 vélis), soit moins d'une journée de consommation de pétrole en France."
+  source: bilan_xd_2022_25
+  page: "p. 184-187"
+  niveau: projection
+  themes: [financement, politique, programme]
+
+# ─────────────────────── ASSOCIATIONS, RÉPARATION ───────────────────────
+- id: ASS-01
+  titre: "Des associations au cœur des expérimentations"
+  texte: "Des associations partenaires (In'VD dans les Grands Causses, Activiteil au Teil, Seinergy Lab aux Mureaux) assurent mise à disposition, maintenance et recueil des retours, dans le cadre de conventions avec la FabMob et le territoire."
+  source: bilan_xd_2022_25
+  page: "p. 88"
+  niveau: terrain
+  themes: [association, experimentation]
+
+- id: ASS-02
+  titre: "Les acteurs de la mobilité solidaire, relais naturels"
+  texte: "Wimoov (programme Terr'Moov), les garages solidaires type Solidarauto, Mob'In et France Travail proposent déjà prêt de véhicules et accompagnement : les vélis peuvent compléter leur offre grâce à une maintenance simplifiée."
+  source: bilan_xd_2022_25
+  page: "p. 111"
+  niveau: terrain
+  themes: [association, inclusion]
+
+- id: ASS-03
+  titre: "Réparer et reconditionner : des véhicules qui durent"
+  texte: "Le Supercycle, assemblé à Montreuil avec quatre batteries reconditionnées gardant 95 % de leur capacité, a dépassé 5 000 km par prototype ; le reconditionnement et la maintenance au plus près des clients confortent l'idée d'usines distribuées."
+  source: bilan_xd_2022_25
+  page: "p. 108-109 ; bilan thématique p. 5"
+  niveau: terrain
+  themes: [reparabilite, association, robustesse]
+
+- id: ASS-04
+  titre: "Le service après-vente, un frein à lever localement"
+  texte: "La difficulté des constructeurs à proposer un service après-vente efficace freine le déploiement et inquiète clients et assureurs : identifier des acteurs locaux de maintenance et de réparation crée des emplois non délocalisables."
+  source: huit_freins
+  page: "frein n°4"
+  niveau: terrain
+  themes: [reparabilite, objection_maintenance, emploi]

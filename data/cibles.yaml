@@ -1,0 +1,372 @@
+# Cibles et objectifs de l'argumentaire (structure reprise du document « Générateur d'argumentaires XD »).
+#
+# Pour chaque objectif :
+#   accroche   phrase d'ouverture ({structure} est remplacé par le nom saisi)
+#   enjeux     ce qui compte pour cette cible (sans chiffre)
+#   preuves    identifiants de data/preuves.yaml, dans l'ordre de priorité
+#   motifs     catégories de trajets des carnets 30 vélis à analyser
+#              (domicile_travail, professionnel, courses, loisirs, ecole, sante, association)
+#   usages     cas d'usage du catalogue des vélis à la vente
+#   objections identifiants de data/objections.yaml
+#   actions    étapes concrètes pour s'engager
+#   ressources identifiants de data/ressources.yaml
+#   conseil    conseil de formulation pour cette cible (optionnel)
+
+collectivite:
+  label: "Collectivité (commune, intercommunalité, département, région)"
+  objectifs:
+    flotte:
+      label: "Utiliser des vélis dans sa flotte"
+      accroche: "Pour {structure}, intégrer des vélis à la flotte de service est une façon rapide et mesurable de réduire les coûts et les émissions des déplacements des agents, tout en répondant aux obligations de verdissement."
+      enjeux:
+        - "Maîtriser le budget de fonctionnement du parc (énergie, entretien, assurance)."
+        - "Atteindre les objectifs de verdissement des flottes publiques."
+        - "Donner l'exemple auprès des habitants et des entreprises du territoire."
+        - "Garder des véhicules adaptés aux missions courtes et répétées des services."
+      preuves: [LOM-01, LOM-02, CEE-01, ECO-02, ECO-01, EXP-02, ENV-01, ENV-08, EXP-11, FIN-03, SOC-04]
+      motifs: [professionnel, domicile_travail]
+      usages: ["véhicules municipaux", "pour opérateur de maintenance et entretien"]
+      objections: [OBJ-PRIX, OBJ-MAINTENANCE, OBJ-MATURITE, OBJ-AUTONOMIE]
+      actions:
+        - "Recenser les trajets de service de moins de 50 km par jour (carnets de bord ou boîtiers sur quelques véhicules actuels)."
+        - "Tester 2 ou 3 vélis auprès d'agents volontaires pendant quelques semaines, en location."
+        - "Vérifier l'éligibilité à la prime CEE TRA-EQ-130 et aux offres de location longue durée."
+        - "Signaler le projet via le questionnaire « Déploiement des vélis » de l'ADEME et contacter la direction régionale."
+      ressources: [R-LOM, R-SYNTH30, R-FINANCEMENT, R-WIDGET, R-FICHES-CONSTR]
+    tourisme:
+      label: "Utiliser des vélis pour développer le tourisme"
+      accroche: "Pour {structure}, les vélis ouvrent une offre de découverte lente du territoire, accessible sans voiture depuis une gare ou un parking relais."
+      enjeux:
+        - "Proposer une expérience de visite originale et bas carbone."
+        - "Desservir des sites mal reliés par les transports en commun."
+        - "Attirer une clientèle sans voiture ou soucieuse de son empreinte."
+      preuves: [TOU-01, TOU-03, TOU-02, EXP-11, ECO-01, ENV-02, COM-04]
+      motifs: [loisirs]
+      usages: ["Tourisme Découverte d'un territoire", "Véhicule En libre service"]
+      objections: [OBJ-SECURITE, OBJ-RELIEF, OBJ-ORGANISATION]
+      actions:
+        - "Identifier 2 ou 3 boucles sur routes secondaires au départ d'une gare ou d'un office de tourisme (outil velimap)."
+        - "Monter un test saisonnier avec un loueur ou l'office de tourisme."
+        - "Associer les acteurs locaux (maison du vélo, hébergeurs) et prévoir un recueil des retours."
+      ressources: [R-AVIGNON, R-CANAUX, R-VELIMAP, R-GUIDE, R-DECOUVRIR]
+      conseil: "Mettre en avant le plaisir, la découverte et la convivialité plutôt que la performance."
+    inclusion:
+      label: "Utiliser des vélis pour développer la mobilité inclusive"
+      accroche: "Pour {structure}, les vélis peuvent rendre l'emploi, les soins et les services accessibles aux habitants qui n'ont pas ou plus accès à la voiture."
+      enjeux:
+        - "Réduire le renoncement aux déplacements, à l'emploi et aux soins."
+        - "Proposer une solution plus économique qu'une voiture aux ménages modestes."
+        - "Compléter l'offre des acteurs de la mobilité solidaire."
+      preuves: [SOC-01, SHS-05, ECO-06, ECO-05, SOC-03, EXP-10, ASS-02, SOC-02]
+      motifs: [domicile_travail, courses, sante]
+      usages: ["trajets domicile travail", "Faire ses courses", "Véhicule En libre service"]
+      objections: [OBJ-PRIX, OBJ-ORGANISATION, OBJ-METEO]
+      actions:
+        - "S'associer à une plateforme de mobilité ou une association d'insertion pour identifier les besoins."
+        - "Mettre en place un prêt ou un autopartage de quelques vélis (modèle LOC'AMI 48 ou Autoplume)."
+        - "Prévoir l'accompagnement : prise en main, choix d'itinéraires, assurance."
+      ressources: [R-INVD, R-SYNTH30, R-GUIDE, R-TROUVERFIN]
+    circulation:
+      label: "Améliorer la circulation des vélis (signalétique, aménagement, schéma directeur)"
+      accroche: "Pour {structure}, créer les conditions favorables aux vélis passe surtout par des aménagements légers des routes existantes, qui profitent aussi aux cyclistes."
+      enjeux:
+        - "Améliorer la sécurité et le confort des usagers légers sans travaux lourds."
+        - "Réduire les coûts d'entretien de la voirie."
+        - "Intégrer les vélis aux schémas cyclables et plans de mobilité."
+      preuves: [AMG-01, AMG-02, EXP-09, AMG-06, ENV-08, AMG-04, AMG-03, AMG-05, PUB-07]
+      motifs: []
+      usages: []
+      objections: [OBJ-SECURITE]
+      actions:
+        - "Cartographier les liaisons prioritaires (velimap) et les points noirs remontés par les testeurs."
+        - "Tester des mesures légères : réduction de vitesse, panneaux, bandes multifonctionnelles."
+        - "Rejoindre le GT « Territoires et expérimentations » (dernier jeudi du mois) et s'appuyer sur les conseils du Cerema."
+      ressources: [R-CEREMA, R-VELIMAP, R-ACTIONSTERR, R-SYNTH30]
+      conseil: "Parler d'aménagement des voies existantes et de cartes d'itinéraires, plutôt que de nouvelles pistes cyclables."
+    apaisement:
+      label: "Ralentir les voitures, favoriser la multimodalité"
+      accroche: "Pour {structure}, apaiser la circulation et organiser les correspondances crée un environnement où les vélis, les vélos et les transports en commun deviennent de vraies alternatives."
+      enjeux:
+        - "Rendre les routes secondaires plus sûres pour tous les usagers."
+        - "Relier les bourgs aux gares et pôles d'échanges sans voiture."
+        - "Réduire l'emprise du stationnement."
+      preuves: [AMG-02, EXP-09, SHS-03, AMG-05, ENV-07, PUB-07, SOC-02]
+      motifs: [domicile_travail, loisirs]
+      usages: []
+      objections: [OBJ-SECURITE]
+      actions:
+        - "Identifier les axes où un abaissement de vitesse est possible et les connexions vers les gares."
+        - "Associer un test de vélis aux réflexions du plan de mobilité."
+      ressources: [R-CEREMA, R-ACTIONSTERR, R-VELIMAP]
+    communication:
+      label: "Communiquer pour faire connaître les vélis"
+      accroche: "Pour {structure}, faire essayer les vélis est le moyen le plus efficace de les faire adopter : l'expérience vécue convainc plus que les discours."
+      enjeux:
+        - "Faire découvrir des solutions concrètes aux habitants et aux entreprises."
+        - "Valoriser l'engagement du territoire."
+        - "Susciter des vocations de testeurs et d'ambassadeurs."
+      preuves: [COM-02, SHS-01, COM-01, COM-04, EXP-08, COM-03, TOU-02]
+      motifs: []
+      usages: []
+      objections: [OBJ-IMAGE]
+      actions:
+        - "Organiser une journée d'essai ou une présence lors d'un événement local (marché, festival, forum)."
+        - "Utiliser les ressources existantes : panneaux d'exposition, vidéos, film, fresque de la mobilité."
+        - "Associer la presse locale en lui proposant un essai."
+      ressources: [R-EXPO, R-MOTION, R-FESTIVALS, R-DECOUVRIR, R-30VELI]
+      conseil: "Montrer des usagers valorisés et des usages de loisirs ; éviter d'ouvrir par la sécurité ou le « remplacement de la voiture »."
+
+entreprise_flotte:
+  label: "Entreprise disposant d'une flotte de véhicules"
+  objectifs:
+    flotte:
+      label: "Utiliser des vélis dans sa flotte, sur ses sites, pour ses déplacements pros"
+      accroche: "Pour {structure}, les vélis sont une réponse rationnelle aux déplacements professionnels courts : moins de coûts, moins d'émissions, et désormais pris en compte dans le verdissement de la flotte."
+      enjeux:
+        - "Réduire le coût total de possession de la flotte."
+        - "Respecter les obligations de verdissement de la LOM."
+        - "Disposer de véhicules adaptés aux trajets courts et aux sites étendus."
+      preuves: [LOM-01, LOM-03, LOM-02, ECO-04, ECO-11, CEE-01, PRO-01, PRO-02, ECO-02, ENV-01, FIN-03]
+      motifs: [professionnel, domicile_travail]
+      usages: ["pour opérateur de maintenance et entretien", "pour artisans", "véhicules municipaux"]
+      objections: [OBJ-PRIX, OBJ-AUTONOMIE, OBJ-MAINTENANCE, OBJ-MATURITE]
+      actions:
+        - "Identifier dans la flotte les véhicules qui roulent moins de 50 km par jour."
+        - "Tester quelques vélis en location sur un site pilote pendant plusieurs semaines."
+        - "Comparer le coût complet et activer la prime CEE pour l'achat ou la location ≥ 24 mois."
+      ressources: [R-LOM, R-DECARMOB, R-NIORT, R-VELIPRO, R-AVELIPRO, R-FINANCEMENT]
+    logistique:
+      label: "Utiliser des vélis pour la logistique"
+      accroche: "Pour {structure}, les vélis utilitaires, seuls ou avec remorque, livrent au plus près des clients là où les fourgons sont contraints."
+      enjeux:
+        - "Conserver l'accès aux centres-villes et aux zones à faibles émissions."
+        - "Réduire le coût d'énergie et de stationnement des tournées."
+        - "Améliorer les conditions de travail des livreurs."
+      preuves: [IND-05, PRO-05, PRO-04, EXP-07, PRO-02, ECO-04, PRO-06, CEE-01]
+      motifs: [professionnel]
+      usages: ["distribuer courrier et colis", "pour commerçants et stands mobiles", "pour artisans"]
+      objections: [OBJ-AUTONOMIE, OBJ-PRIX, OBJ-MAINTENANCE]
+      actions:
+        - "Choisir une tournée courte et régulière comme cas pilote."
+        - "Tester un véli utilitaire ou un attelage véli + remorque pendant plusieurs semaines."
+        - "Mesurer temps de tournée, stationnement, énergie et ressenti des livreurs."
+      ressources: [R-SAMOA, R-VELIPRO, R-AVELIPRO]
+    inclusion:
+      label: "Utiliser des vélis pour développer la mobilité inclusive"
+      accroche: "Pour {structure}, proposer des vélis aux salariés sans solution de mobilité facilite le recrutement et la fidélisation sur des postes difficiles d'accès."
+      enjeux:
+        - "Recruter et fidéliser des salariés éloignés ou sans permis."
+        - "Réduire les frais kilométriques et la fatigue des trajets."
+      preuves: [SOC-01, SOC-07, EXP-06, SHS-05, ECO-06, EXP-10]
+      motifs: [domicile_travail, professionnel]
+      usages: ["trajets domicile travail", "Véhicule En libre service"]
+      objections: [OBJ-PRIX, OBJ-METEO]
+      actions:
+        - "Identifier les postes et les salariés concernés avec les représentants du personnel."
+        - "Mettre à disposition quelques vélis en prêt ou en autopartage."
+      ressources: [R-LEMANS, R-SYNTH30, R-INVD]
+    essai_salaries:
+      label: "Faire essayer les vélis à ses salariés"
+      accroche: "Pour {structure}, une campagne d'essai permet aux salariés de découvrir les vélis sur leurs propres trajets, avant tout engagement."
+      enjeux:
+        - "Proposer des alternatives concrètes pour le domicile-travail."
+        - "Engager les salariés dans la démarche de mobilité de l'entreprise."
+      preuves: [EXP-05, EXP-08, SOC-04, ECO-05, COM-02, EXP-12]
+      motifs: [domicile_travail]
+      usages: ["trajets domicile travail"]
+      objections: [OBJ-METEO, OBJ-SECURITE, OBJ-ORGANISATION]
+      actions:
+        - "Organiser une journée de découverte puis des prêts d'une à deux semaines."
+        - "Utiliser le carnet de bord des expérimentations pour recueillir les retours."
+      ressources: [R-30VELI, R-GUIDE, R-DECOUVRIR]
+    rse:
+      label: "L'intégrer dans sa politique RSE"
+      accroche: "Pour {structure}, les vélis traduisent la politique RSE en actions visibles : décarbonation mesurable, santé des salariés, achats auprès d'une filière française."
+      enjeux:
+        - "Réduire les émissions du scope 1 et 3 liées aux déplacements."
+        - "Agir sur la santé et la qualité de vie au travail."
+        - "Soutenir l'emploi industriel local."
+      preuves: [ENV-01, ENV-02, SOC-04, IND-01, IND-03, COM-04, FIN-04]
+      motifs: [domicile_travail, professionnel]
+      usages: []
+      objections: [OBJ-IMAGE, OBJ-VE]
+      actions:
+        - "Inscrire un objectif de vélis dans le plan de mobilité employeur."
+        - "Valoriser l'engagement dans le reporting extra-financier."
+      ressources: [R-AVELIPRO, R-BILANTHEM]
+
+entreprise_financeur:
+  label: "Entreprise ou acteur qui pourrait financer"
+  objectifs:
+    pourquoi:
+      label: "Pourquoi financer les vélis et les activités associées"
+      accroche: "Pour {structure}, financer les vélis, c'est soutenir une filière naissante à fort effet d'entraînement : peu de capital public, des co-bénéfices multiples et une chaîne de valeur largement européenne."
+      enjeux:
+        - "Investir dans des solutions de décarbonation à fort impact par euro engagé."
+        - "Soutenir l'emploi local et la souveraineté industrielle."
+        - "Se positionner tôt sur un marché en émergence."
+      preuves: [FIN-04, PUB-02, PUB-01, PUB-10, IND-01, IND-07, FIN-01, IND-08, PUB-05, IND-10]
+      motifs: []
+      usages: []
+      objections: [OBJ-MATURITE, OBJ-VE]
+      actions:
+        - "Rejoindre le GT Investissement et financement de l'XD."
+        - "Étudier un co-financement d'expérimentations, de flottes partagées ou d'ateliers de réparation."
+      ressources: [R-GTINVEST, R-8FREINS, R-BILANTHEM]
+    comment:
+      label: "Comment financer"
+      accroche: "Pour {structure}, plusieurs leviers sont disponibles : capital des constructeurs, outils de location et de garantie, valorisation des bénéfices santé."
+      enjeux:
+        - "Trouver des véhicules de financement adaptés à de petites séries."
+        - "Partager le risque avec des acteurs publics."
+      preuves: [FIN-02, FIN-05, FIN-06, IND-07, FIN-03, CEE-01, FIN-08]
+      motifs: []
+      usages: []
+      objections: []
+      actions:
+        - "Proposer une offre de location ou de leasing adossée à un fonds de garantie."
+        - "Adapter une couverture d'assurance aux spécificités des vélis."
+        - "Co-investir dans des constructeurs en phase d'industrialisation."
+      ressources: [R-FINANCEMENT, R-GTINVEST]
+
+entreprise_partenaire:
+  label: "Entreprise qui pourrait rejoindre l'XD comme partenaire"
+  objectifs:
+    competences:
+      label: "Fournir compétences, produits, services aux acteurs de l'XD"
+      accroche: "Pour {structure}, l'XD est l'accès direct à une communauté de constructeurs, de territoires, de laboratoires et d'écoles qui cherchent des compétences et des composants."
+      enjeux:
+        - "Trouver de nouveaux clients dans une filière en émergence."
+        - "Contribuer à des standards et composants partagés."
+      preuves: [IND-06, FIN-07, IND-11, PUB-09, PUB-12, IND-03, IND-10]
+      motifs: []
+      usages: []
+      objections: [OBJ-MATURITE]
+      actions:
+        - "Se signaler auprès de l'équipe XD et rejoindre le GT Mutualisation des composants."
+        - "Proposer une offre adaptée aux petites séries (prix, quantités minimales)."
+      ressources: [R-PARTENAIRES, R-PROJETS]
+    constructeur:
+      label: "Aider spécifiquement un constructeur"
+      accroche: "Pour {structure}, accompagner un constructeur de vélis, c'est l'aider à franchir l'étape la plus délicate : le passage du prototype à la série."
+      enjeux:
+        - "Apporter industrialisation, achats, qualité ou distribution."
+        - "Sécuriser une relation de long terme avec un futur client."
+      preuves: [IND-07, FIN-01, EXP-04, PUB-11, ASS-04]
+      motifs: []
+      usages: []
+      objections: []
+      actions:
+        - "Identifier un constructeur via le catalogue et les fiches constructeurs."
+        - "Proposer un appui ciblé : homologation, achats, outillage, après-vente."
+      ressources: [R-FICHES-CONSTR, R-PARTENAIRES]
+    mentor:
+      label: "Construire une équipe de mentors"
+      accroche: "Pour {structure}, mettre l'expérience de professionnels au service des équipes de vélis accélère leur structuration industrielle et commerciale."
+      enjeux:
+        - "Transmettre des savoir-faire industriels et commerciaux."
+        - "Engager ses collaborateurs dans un projet utile."
+      preuves: [IND-07, FIN-01, IND-08, PUB-09]
+      motifs: []
+      usages: []
+      objections: []
+      actions:
+        - "Recenser des mentors volontaires (industrie, finance, distribution)."
+        - "Organiser avec l'équipe XD des binômes mentor-constructeur."
+      ressources: [R-PARTENAIRES, R-GTINVEST]
+
+laboratoire:
+  label: "Laboratoire de recherche"
+  objectifs:
+    connaissances:
+      label: "Produire des connaissances pour accélérer les vélis et étendre leurs usages"
+      accroche: "Pour {structure}, les vélis offrent un terrain de recherche inédit : des données d'usage réelles, des territoires engagés et des questions ouvertes en ingénierie comme en sciences sociales."
+      enjeux:
+        - "Accéder à des terrains et des données d'expérimentation."
+        - "Travailler sur des questions peu documentées dans la littérature."
+      preuves: [EDU-04, SHS-01, EXP-05, EDU-05, ENV-09, EXP-01]
+      motifs: []
+      usages: []
+      objections: []
+      actions:
+        - "Exploiter l'export public des carnets de bord 30 vélis."
+        - "Proposer un projet sur une question ouverte (sécurité, santé, emploi, durabilité)."
+      ressources: [R-MOBRURALES, R-VIMOB, R-30VELI, R-PROJETS]
+
+ecole:
+  label: "École, établissement de formation"
+  objectifs:
+    pedagogie:
+      label: "Construire des ressources pédagogiques utilisant des vélis"
+      accroche: "Pour {structure}, un véli est un support pédagogique complet : mécanique, électricité, design, énergie et mobilité dans un objet compréhensible et démontable."
+      enjeux:
+        - "Proposer des projets concrets et motivants aux élèves et étudiants."
+        - "Relier enseignement et transition écologique."
+      preuves: [EDU-02, EDU-03, IND-03, ENV-02, COM-01]
+      motifs: []
+      usages: []
+      objections: []
+      actions:
+        - "Rejoindre le GT Écoles et universités."
+        - "Lancer un projet étudiant avec un constructeur ou un territoire d'expérimentation."
+      ressources: [R-ECOLES, R-PROJETS]
+    formation:
+      label: "Construire des modules de formation (conception, fabrication, entretien, reconditionnement)"
+      accroche: "Pour {structure}, former aux métiers des vélis prépare des emplois locaux : assemblage, maintenance et reconditionnement au plus près des usagers."
+      enjeux:
+        - "Anticiper les besoins de compétences d'une filière en développement."
+        - "Ouvrir des débouchés locaux non délocalisables."
+      preuves: [EDU-01, SOC-06, IND-03, ASS-04, EDU-06, IND-04]
+      motifs: []
+      usages: []
+      objections: []
+      actions:
+        - "Identifier avec les constructeurs régionaux les compétences recherchées."
+        - "Concevoir un module court maintenance et diagnostic des vélis."
+      ressources: [R-ECOLES, R-FICHES-CONSTR]
+
+association:
+  label: "Association"
+  objectifs:
+    usage:
+      label: "Utiliser des vélis pour l'association"
+      accroche: "Pour {structure}, des vélis peuvent assurer les déplacements de l'association à moindre coût, tout en faisant connaître ces véhicules au public."
+      enjeux:
+        - "Réduire le coût des déplacements de l'association."
+        - "Disposer d'un véhicule pour le matériel et les animations."
+      preuves: [ECO-01, PRO-04, ASS-01, CEE-01, FIN-03, COM-04]
+      motifs: [association, professionnel]
+      usages: ["Faire ses courses", "pour commerçants et stands mobiles"]
+      objections: [OBJ-PRIX, OBJ-MAINTENANCE]
+      actions:
+        - "Tester un véli en location sur les déplacements réguliers de l'association."
+        - "Chercher un cofinancement (fondation, collectivité, budget participatif)."
+      ressources: [R-FINANCEMENT, R-TROUVERFIN]
+    inclusion:
+      label: "Utiliser des vélis pour développer la mobilité inclusive"
+      accroche: "Pour {structure}, les vélis complètent l'offre de mobilité solidaire : plus simples à entretenir qu'une voiture et moins chers à faire rouler."
+      enjeux:
+        - "Proposer des solutions durables aux personnes accompagnées."
+        - "Limiter les coûts d'entretien d'un parc solidaire."
+      preuves: [SOC-01, ASS-02, SOC-03, EXP-10, SHS-05, ECO-06, EXP-02]
+      motifs: [domicile_travail, courses, sante]
+      usages: ["trajets domicile travail", "Véhicule En libre service"]
+      objections: [OBJ-ORGANISATION, OBJ-PRIX]
+      actions:
+        - "Intégrer 1 ou 2 vélis dans l'offre de prêt avec un accompagnement à la prise en main."
+        - "S'appuyer sur le guide d'expérimentation et les documents types (contrat de prêt, état des lieux)."
+      ressources: [R-INVD, R-GUIDE, R-SYNTH30]
+    reparation:
+      label: "Maintenir, réparer, reconditionner des vélis"
+      accroche: "Pour {structure}, entretenir et reconditionner des vélis crée une activité locale utile, au service de véhicules conçus pour durer plusieurs vies."
+      enjeux:
+        - "Développer une activité d'atelier et des parcours d'insertion."
+        - "Allonger la durée de vie des véhicules."
+      preuves: [ASS-04, ASS-03, IND-02, ENV-09, IND-03, SOC-06]
+      motifs: []
+      usages: []
+      objections: []
+      actions:
+        - "Se faire connaître comme acteur de maintenance auprès des constructeurs et territoires."
+        - "Se former sur les principaux modèles déployés localement."
+      ressources: [R-FICHES-CONSTR, R-PROJETS]

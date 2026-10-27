@@ -1,0 +1,7 @@
+# Données brutes (contiennent des coordonnées personnelles) : ne jamais publier
+brut/
+# Secrets locaux
+.streamlit/secrets.toml
+__pycache__/
+*.pyc
+.pytest_cache/
