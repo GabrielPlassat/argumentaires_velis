@@ -34,9 +34,9 @@ Aucun chiffre n'est généré par une IA. Une étape de **rédaction assistée**
 3. Dans **Settings → Secrets**, coller (en adaptant) le contenu de `.streamlit/secrets.toml.example` :
    - `APP_PASSWORD` : protège l'accès par un mot de passe (conseillé si le dépôt contient des éléments internes) ;
    - `ALBERT_API_KEY` : active l'onglet *Rédaction assistée* avec Albert, l'API IA de l'État (facultatif) ;
-   - ou `ANTHROPIC_API_KEY` pour utiliser Claude à la place (clé commençant par `sk-ant-`) ;
-   - `MODELE` : modèle utilisé (facultatif ; par défaut `openweight-large` pour Albert, voir
-     https://guides.ia.numerique.gouv.fr/albert-api/modeles/available-models).
+   - `ANTHROPIC_API_KEY` : active la rédaction avec Claude (clé commençant par `sk-ant-`, créée sur https://console.anthropic.com) ;
+     avec les deux clés, un sélecteur permet de choisir l'IA et de comparer les textes ;
+   - `MODELE_ALBERT`, `MODELE_CLAUDE` : modèles utilisés (facultatif ; par défaut `openweight-large` et `claude-sonnet-5-5`).
 4. Dans **Settings → Sharing**, restreindre les personnes autorisées si besoin.
 
 À chaque modification d'un fichier sur GitHub, l'application se met à jour automatiquement.

@@ -153,20 +153,25 @@ with onglet_ia:
     st.write("Étape facultative : l'IA reformule l'argumentaire en texte suivi, **uniquement** à partir des preuves "
              "sélectionnées. Un contrôle signale ensuite tout nombre absent du dossier de preuves.")
     arg = st.session_state.get("arg")
-    from xd.ia import FOURNISSEURS, ErreurIA, choisir_fournisseur, rediger, verifier_nombres
+    from xd.ia import FOURNISSEURS, ErreurIA, fournisseurs_disponibles, modele_pour, rediger, verifier_nombres
 
-    choix_ia = choisir_fournisseur({k: _secret(k) for k in ("ALBERT_API_KEY", "ANTHROPIC_API_KEY")})
+    secrets_ia = {k: _secret(k) for k in ("ALBERT_API_KEY", "ANTHROPIC_API_KEY", "MODELE",
+                                          "MODELE_ALBERT", "MODELE_CLAUDE")}
+    dispo = fournisseurs_disponibles(secrets_ia)
     if not arg:
         st.info("Générez d'abord un argumentaire dans l'onglet « Argumentaire ».")
-    elif not choix_ia:
-        st.info("Aucune clé d'API n'est configurée. Ajoutez ALBERT_API_KEY (API de l'État) ou ANTHROPIC_API_KEY "
-                "dans les secrets de l'application (voir le mode d'emploi). "
+    elif not dispo:
+        st.info("Aucune clé d'API n'est configurée. Ajoutez ALBERT_API_KEY (API de l'État) et/ou ANTHROPIC_API_KEY "
+                "(Claude) dans les secrets de l'application (voir le mode d'emploi). "
                 "L'argumentaire de l'onglet principal reste utilisable sans IA.")
     else:
-        fournisseur, cle = choix_ia
-        modele = _secret("MODELE") or FOURNISSEURS[fournisseur]["modele"]
-        if fournisseur == "albert" and modele.startswith("claude"):
-            modele = FOURNISSEURS["albert"]["modele"]
+        if len(dispo) > 1:
+            fournisseur = st.radio("IA à utiliser", list(dispo), horizontal=True,
+                                   format_func=lambda f: FOURNISSEURS[f]["nom"])
+        else:
+            fournisseur = next(iter(dispo))
+        cle = dispo[fournisseur]
+        modele = modele_pour(fournisseur, secrets_ia)
         st.caption(f"IA utilisée : {FOURNISSEURS[fournisseur]['nom']} — modèle « {modele} »")
         consignes = st.text_area("Précisez la cible et la situation (rendez-vous, courrier, réunion publique...)",
                                  value=st.session_state["ctx"].precisions if st.session_state.get("ctx") else "",
@@ -183,6 +188,7 @@ with onglet_ia:
                     st.error(str(e))
             if texte:
                 st.session_state["texte_ia"] = texte
+                st.session_state["ia_utilisee"] = f"{FOURNISSEURS[fournisseur]['nom']} — {modele}"
                 st.session_state["suspects"] = verifier_nombres(texte, arg, base, consignes + " " + st.session_state["ctx"].structure)
         if st.session_state.get("texte_ia"):
             suspects = st.session_state.get("suspects", [])
@@ -190,6 +196,8 @@ with onglet_ia:
                 st.error("Nombres absents du dossier de preuves, à vérifier ou supprimer : " + ", ".join(suspects))
             else:
                 st.success("Contrôle : tous les nombres du texte figurent dans le dossier de preuves.")
+            if st.session_state.get("ia_utilisee"):
+                st.caption("Texte rédigé avec " + st.session_state["ia_utilisee"])
             st.download_button("Télécharger le texte (.md)", st.session_state["texte_ia"],
                                file_name="argumentaire_xd_redige.md")
             st.markdown(st.session_state["texte_ia"])

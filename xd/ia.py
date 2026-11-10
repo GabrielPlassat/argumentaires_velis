@@ -25,6 +25,30 @@ class ErreurIA(Exception):
     """Erreur d'appel à l'IA, avec un message compréhensible."""
 
 
+def fournisseurs_disponibles(secrets: dict) -> dict:
+    """Renvoie {fournisseur: clé} pour chaque clé présente dans les secrets (Albert d'abord)."""
+    dispo = {}
+    for nom_secret in ("ALBERT_API_KEY", "ANTHROPIC_API_KEY"):
+        cle = secrets.get(nom_secret)
+        if not cle:
+            continue
+        # Une clé Anthropic commence par « sk-ant- », quel que soit le nom du secret.
+        fournisseur = "anthropic" if str(cle).startswith("sk-ant-") else "albert"
+        dispo.setdefault(fournisseur, cle)
+    return dispo
+
+
+def modele_pour(fournisseur: str, secrets: dict) -> str:
+    """Modèle à utiliser : MODELE_CLAUDE / MODELE_ALBERT, sinon MODELE s'il correspond au fournisseur."""
+    propre = secrets.get("MODELE_CLAUDE" if fournisseur == "anthropic" else "MODELE_ALBERT")
+    if propre:
+        return propre
+    commun = secrets.get("MODELE")
+    if commun and str(commun).startswith("claude") == (fournisseur == "anthropic"):
+        return commun
+    return FOURNISSEURS[fournisseur]["modele"]
+
+
 def choisir_fournisseur(secrets: dict) -> tuple[str, str] | None:
     """Renvoie (fournisseur, clé) selon les secrets disponibles, Albert en priorité."""
     if secrets.get("ALBERT_API_KEY"):
@@ -116,6 +140,9 @@ def rediger(arg: Argumentaire, base, cle_api: str, consignes_cible: str, longueu
         if "404" in texte or "model" in texte.lower():
             raise ErreurIA(f"{nom} ne reconnaît pas le modèle « {modele} ». Corrigez le secret MODELE "
                            f"(liste des modèles dans la documentation du fournisseur).") from e
+        if "credit balance" in texte.lower() or "billing" in texte.lower():
+            raise ErreurIA(f"{nom} : crédit insuffisant sur le compte API. Ajoutez des crédits dans la console "
+                           f"(Plans & Billing) puis réessayez.") from e
         if "429" in texte:
             raise ErreurIA(f"{nom} : quota ou limite de requêtes atteint, réessayez dans quelques minutes.") from e
         if "Connection" in type(e).__name__ or "Timeout" in type(e).__name__:

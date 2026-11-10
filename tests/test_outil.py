@@ -109,3 +109,32 @@ def test_style_redige_sans_puces():
         d = docx.Document(io.BytesIO(vers_docx(arg, BASE, style="redige")))
         assert not any(p.style.name == "List Bullet" for p in d.paragraphs), sel
         assert len(d.tables) <= 1, sel
+
+
+def test_deux_fournisseurs_et_modeles():
+    from xd.ia import fournisseurs_disponibles, modele_pour
+    secrets = {"ALBERT_API_KEY": "a", "ANTHROPIC_API_KEY": "sk-ant-b", "MODELE": "openweight-large"}
+    assert fournisseurs_disponibles(secrets) == {"albert": "a", "anthropic": "sk-ant-b"}
+    assert modele_pour("albert", secrets) == "openweight-large"
+    assert modele_pour("anthropic", secrets) == "claude-sonnet-5-5"
+    assert modele_pour("anthropic", {"MODELE_CLAUDE": "claude-opus-5-5"}) == "claude-opus-5-5"
+
+
+def test_redaction_claude_simulee(monkeypatch):
+    import sys, types
+    from xd import ia
+    appels = {}
+
+    class FauxAnthropic:
+        def __init__(self, api_key):
+            self.messages = types.SimpleNamespace(create=self.create)
+
+        def create(self, **kw):
+            appels.update(kw)
+            bloc = types.SimpleNamespace(type="text", text="Texte Claude [1].")
+            return types.SimpleNamespace(content=[bloc])
+
+    monkeypatch.setitem(sys.modules, "anthropic", types.SimpleNamespace(Anthropic=FauxAnthropic))
+    arg = generer(BASE, Contexte(selection=[("collectivite", "flotte")]))
+    assert ia.rediger(arg, BASE, "sk-ant-x", "test", fournisseur="anthropic") == "Texte Claude [1]."
+    assert appels["model"] == "claude-sonnet-5-5" and "Dossier de preuves" in appels["messages"][0]["content"]
