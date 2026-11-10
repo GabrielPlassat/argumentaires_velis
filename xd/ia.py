@@ -63,7 +63,9 @@ CONSIGNES = """Tu es rédacteur pour le programme eXtrême Défi Mobilité de l'
 Tu rédiges en français un argumentaire destiné à convaincre la cible décrite, à partir d'un dossier de preuves.
 
 Règles impératives :
-1. N'utilise QUE les faits du dossier de preuves. N'ajoute aucun chiffre, nom, date ou fait extérieur.
+1. N'utilise QUE les faits du dossier de preuves. N'ajoute aucun chiffre, nom, date ou fait extérieur,
+   y compris dans les phrases de contexte ou d'introduction : aucune année, décennie (« depuis les années… »),
+   date historique, statistique ou référence qui ne figure pas mot pour mot dans le dossier.
 2. Recopie chaque nombre exactement comme dans le dossier (même unité, même arrondi).
 3. Place la référence entre crochets du dossier, par exemple [3], juste après chaque fait.
 4. Présente les estimations et projections comme telles (« selon les estimations du Bilan XD... »).
@@ -107,11 +109,8 @@ def dossier(arg: Argumentaire, base) -> str:
     return "\n".join(lignes)
 
 
-def rediger(arg: Argumentaire, base, cle_api: str, consignes_cible: str, longueur: str = "2 pages",
-            ton: str = "institutionnel", modele: str | None = None, fournisseur: str = "anthropic") -> str:
-    contenu = (f"Cible et contexte : {consignes_cible}\n"
-               f"Longueur visée : {longueur}. Ton : {ton}.\n\n"
-               f"Dossier de preuves :\n{dossier(arg, base)}")
+def _appeler(fournisseur: str, cle_api: str, modele: str | None, systeme: str, contenu: str) -> str:
+    """Appel unique à l'IA choisie, avec des messages d'erreur lisibles."""
     if not modele or (fournisseur == "albert" and modele.startswith("claude")):
         modele = FOURNISSEURS[fournisseur]["modele"]
     try:
@@ -121,14 +120,14 @@ def rediger(arg: Argumentaire, base, cle_api: str, consignes_cible: str, longueu
             client = OpenAI(base_url=FOURNISSEURS["albert"]["url"], api_key=cle_api)
             r = client.chat.completions.create(
                 model=modele, max_tokens=8000, temperature=0.3,
-                messages=[{"role": "system", "content": CONSIGNES}, {"role": "user", "content": contenu}],
+                messages=[{"role": "system", "content": systeme}, {"role": "user", "content": contenu}],
             )
             return r.choices[0].message.content or ""
         import anthropic
 
         client = anthropic.Anthropic(api_key=cle_api)
         message = client.messages.create(
-            model=modele, max_tokens=6000, system=CONSIGNES,
+            model=modele, max_tokens=8000, system=systeme,
             messages=[{"role": "user", "content": contenu}],
         )
         return "".join(b.text for b in message.content if getattr(b, "type", "") == "text")
@@ -137,17 +136,40 @@ def rediger(arg: Argumentaire, base, cle_api: str, consignes_cible: str, longueu
         texte = str(e)
         if "401" in texte or "uthentication" in texte or ("nvalid" in texte and "key" in texte.lower()):
             raise ErreurIA(f"{nom} refuse la clé d'API : vérifiez qu'elle est valide et bien nommée dans les secrets.") from e
-        if "404" in texte or "model" in texte.lower():
-            raise ErreurIA(f"{nom} ne reconnaît pas le modèle « {modele} ». Corrigez le secret MODELE "
-                           f"(liste des modèles dans la documentation du fournisseur).") from e
         if "credit balance" in texte.lower() or "billing" in texte.lower():
             raise ErreurIA(f"{nom} : crédit insuffisant sur le compte API. Ajoutez des crédits dans la console "
                            f"(Plans & Billing) puis réessayez.") from e
+        if "404" in texte or "model" in texte.lower():
+            raise ErreurIA(f"{nom} ne reconnaît pas le modèle « {modele} ». Corrigez le secret MODELE "
+                           f"(liste des modèles dans la documentation du fournisseur).") from e
         if "429" in texte:
             raise ErreurIA(f"{nom} : quota ou limite de requêtes atteint, réessayez dans quelques minutes.") from e
         if "Connection" in type(e).__name__ or "Timeout" in type(e).__name__:
             raise ErreurIA(f"{nom} est injoignable pour le moment (réseau ou service indisponible). Réessayez plus tard.") from e
         raise ErreurIA(f"Erreur lors de l'appel à {nom} : {type(e).__name__}.") from e
+
+
+def rediger(arg: Argumentaire, base, cle_api: str, consignes_cible: str, longueur: str = "2 pages",
+            ton: str = "institutionnel", modele: str | None = None, fournisseur: str = "anthropic") -> str:
+    contenu = (f"Cible et contexte : {consignes_cible}\n"
+               f"Longueur visée : {longueur}. Ton : {ton}.\n\n"
+               f"Dossier de preuves :\n{dossier(arg, base)}")
+    return _appeler(fournisseur, cle_api, modele, CONSIGNES, contenu)
+
+
+CONSIGNES_CORRECTION = """Tu relis un argumentaire rédigé à partir d'un dossier de preuves.
+Un contrôle automatique a repéré des nombres qui ne figurent pas dans le dossier.
+Pour chacun : supprime-le, ou remplace la phrase par une formulation sans ce nombre, ou par un fait
+du dossier si l'un d'eux dit la même chose. Ne modifie RIEN d'autre : mêmes titres, mêmes paragraphes,
+mêmes références entre crochets, même liste de sources. Renvoie uniquement le texte corrigé complet."""
+
+
+def corriger(texte_ia: str, suspects: list[str], arg: Argumentaire, base, cle_api: str,
+             modele: str | None = None, fournisseur: str = "anthropic") -> str:
+    contenu = (f"Nombres à retirer ou à justifier par le dossier : {', '.join(suspects)}\n\n"
+               f"Texte à corriger :\n{texte_ia}\n\n"
+               f"Dossier de preuves (seule base autorisée) :\n{dossier(arg, base)}")
+    return _appeler(fournisseur, cle_api, modele, CONSIGNES_CORRECTION, contenu)
 
 
 _NOMBRE = re.compile(r"(?<![\[\w])\d[\d   ]*(?:[,.]\d+)?")
@@ -168,3 +190,15 @@ def verifier_nombres(texte_ia: str, arg: Argumentaire, base, contexte: str = "")
         if n and n not in connus and n not in suspects and len(n.replace(",", "")) > 1:
             suspects.append(n)
     return suspects
+
+
+def extraits(texte_ia: str, nombre: str, maxi: int = 2) -> list[str]:
+    """Phrases du texte rédigé qui contiennent le nombre signalé (pour le localiser)."""
+    phrases = re.split(r"(?<=[.!?])\s+|\n+", texte_ia)
+    trouvees = []
+    for ph in phrases:
+        if any(_normaliser(m) == nombre for m in _NOMBRE.findall(re.sub(r"\[[^\]]*\]", " ", ph))):
+            trouvees.append(ph.strip())
+        if len(trouvees) >= maxi:
+            break
+    return trouvees

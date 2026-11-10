@@ -153,7 +153,8 @@ with onglet_ia:
     st.write("Étape facultative : l'IA reformule l'argumentaire en texte suivi, **uniquement** à partir des preuves "
              "sélectionnées. Un contrôle signale ensuite tout nombre absent du dossier de preuves.")
     arg = st.session_state.get("arg")
-    from xd.ia import FOURNISSEURS, ErreurIA, fournisseurs_disponibles, modele_pour, rediger, verifier_nombres
+    from xd.ia import (FOURNISSEURS, ErreurIA, corriger, extraits, fournisseurs_disponibles, modele_pour,
+                       rediger, verifier_nombres)
 
     secrets_ia = {k: _secret(k) for k in ("ALBERT_API_KEY", "ANTHROPIC_API_KEY", "MODELE",
                                           "MODELE_ALBERT", "MODELE_CLAUDE")}
@@ -194,6 +195,24 @@ with onglet_ia:
             suspects = st.session_state.get("suspects", [])
             if suspects:
                 st.error("Nombres absents du dossier de preuves, à vérifier ou supprimer : " + ", ".join(suspects))
+                with st.container(border=True):
+                    st.markdown("**Où se trouvent ces nombres dans le texte**")
+                    for n in suspects:
+                        for ph in extraits(st.session_state["texte_ia"], n):
+                            st.markdown(f"- **{n}** : « {ph} »")
+                    st.caption("L'IA a ajouté ces nombres sans appui dans les sources. Vous pouvez les retirer "
+                               "à la main après téléchargement, ou demander une correction automatique.")
+                    if st.button("Corriger automatiquement (retirer ces nombres)"):
+                        with st.spinner("Correction en cours..."):
+                            try:
+                                corrige = corriger(st.session_state["texte_ia"], suspects, arg, base, cle,
+                                                   modele, fournisseur)
+                                st.session_state["texte_ia"] = corrige
+                                st.session_state["suspects"] = verifier_nombres(
+                                    corrige, arg, base, consignes + " " + st.session_state["ctx"].structure)
+                                st.rerun()
+                            except ErreurIA as e:
+                                st.error(str(e))
             else:
                 st.success("Contrôle : tous les nombres du texte figurent dans le dossier de preuves.")
             if st.session_state.get("ia_utilisee"):

@@ -138,3 +138,20 @@ def test_redaction_claude_simulee(monkeypatch):
     arg = generer(BASE, Contexte(selection=[("collectivite", "flotte")]))
     assert ia.rediger(arg, BASE, "sk-ant-x", "test", fournisseur="anthropic") == "Texte Claude [1]."
     assert appels["model"] == "claude-sonnet-5-5" and "Dossier de preuves" in appels["messages"][0]["content"]
+
+
+def test_extraits_et_correction(monkeypatch):
+    import sys, types
+    from xd import ia
+    texte = "Depuis les années 1970, la voiture domine. Les vélis coûtent 1 € aux 100 km [1]."
+    assert ia.extraits(texte, "1970") == ["Depuis les années 1970, la voiture domine."]
+
+    class FauxAnthropic:
+        def __init__(self, api_key):
+            self.messages = types.SimpleNamespace(create=lambda **kw: types.SimpleNamespace(
+                content=[types.SimpleNamespace(type="text", text="La voiture domine. Les vélis coûtent 1 € aux 100 km [1].")]))
+
+    monkeypatch.setitem(sys.modules, "anthropic", types.SimpleNamespace(Anthropic=FauxAnthropic))
+    arg = generer(BASE, Contexte(selection=[("collectivite", "flotte")]))
+    corrige = ia.corriger(texte, ["1970"], arg, BASE, "sk-ant-x")
+    assert verifier_nombres(corrige, arg, BASE) == []
