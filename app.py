@@ -15,7 +15,7 @@ from xd import catalogue as cat_mod
 from xd import stats as st_mod
 from xd.donnees import charger
 from xd.export import vers_docx
-from xd.generateur import NIVEAUX, TERRITOIRES, Contexte, generer, vers_markdown
+from xd.generateur import NIVEAUX, TERRITOIRES, Contexte, detecter_cas_usage, generer, vers_markdown
 
 st.set_page_config(page_title="Générateur d'argumentaires XD", page_icon="🚲", layout="wide")
 
@@ -57,8 +57,8 @@ if base.anomalies:
         for a in base.anomalies:
             st.write("- " + a)
 
-onglet_gen, onglet_ia, onglet_donnees, onglet_preuves, onglet_aide = st.tabs(
-    ["✍️ Argumentaire", "🤖 Rédaction assistée", "📊 Données terrain", "📚 Base de preuves", "❓ Mode d'emploi"])
+onglet_aide, onglet_gen, onglet_ia, onglet_donnees, onglet_preuves = st.tabs(
+    ["❓ Mode d'emploi", "✍️ Argumentaire", "🤖 Rédaction assistée", "📊 Données terrain", "📚 Base de preuves"])
 
 # ───────────────────────────────── Génération ─────────────────────────────────
 with onglet_gen:
@@ -83,6 +83,15 @@ with onglet_gen:
                  "S'il est rédigé comme une phrase destinée au lecteur, il peut aussi être repris en introduction.")
         reprendre = st.checkbox("Reprendre ce texte en introduction de l'argumentaire", value=False,
                                 disabled=not precisions.strip())
+        cas_choisis = st.multiselect(
+            "Cas d'usage envisagés (facultatif)", options=list(base.cas_usage),
+            format_func=lambda c: base.cas_usage[c]["label"], placeholder="Choisir...",
+            help="Les retours d'expérimentation sur des usages identiques ou similaires seront mis en avant. "
+                 "Les cas d'usage mentionnés dans le texte de contexte sont aussi repérés automatiquement.")
+        reperes = [c for c in detecter_cas_usage(precisions, base.cas_usage) if c not in cas_choisis]
+        if reperes:
+            st.caption("Repérés dans le contexte et pris en compte : "
+                       + ", ".join(base.cas_usage[c]["label"] for c in reperes))
         types = st.multiselect("Type de territoire", options=list(TERRITOIRES),
                                format_func=lambda k: TERRITOIRES[k][0], placeholder="Choisir...")
         territoires_ref = st.multiselect(
@@ -109,7 +118,7 @@ with onglet_gen:
         max_preuves = st.slider("Nombre d'arguments clés", 4, 15, 9)
 
         if st.button("Générer l'argumentaire", type="primary", disabled=not selection, width="stretch"):
-            ctx = Contexte(selection=selection, structure=structure, precisions=precisions,
+            ctx = Contexte(selection=selection, structure=structure, precisions=precisions, cas_usage=cas_choisis,
                            reprendre_precisions=reprendre, types_territoire=types,
                            territoires_30veli=territoires_ref, diffusion_externe=diffusion_externe,
                            inclure_objections=objections, inclure_relativiser=relativiser,
@@ -127,6 +136,8 @@ with onglet_gen:
         if arg:
             for a in arg.avertissements:
                 st.warning(a)
+            if arg.cas_usage:
+                st.info("Expérimentations mises en avant pour : " + ", ".join(arg.cas_usage))
             md_complet = vers_markdown(arg, base, st.session_state.get("niveaux", True), inclure_notes=True,
                                        style=st.session_state.get("style", "redige"))
             md_diffusion = vers_markdown(arg, base, st.session_state.get("niveaux", True), inclure_notes=False,
@@ -300,7 +311,10 @@ with onglet_aide:
 ### Comment ça marche
 1. **Cochez une ou plusieurs cibles** (collectivité, entreprise, financeur, partenaire, laboratoire, école, association)
    et l'objectif visé. La liste reprend le document « Générateur d'argumentaires XD ».
-2. **Précisez le contexte** : nom du destinataire, type de territoire, territoires d'expérimentation comparables.
+2. **Précisez le contexte** : nom du destinataire, situation (texte libre), **cas d'usage envisagés**
+   (aide à domicile, logistique, tourisme...), type de territoire, territoires d'expérimentation comparables.
+   Quand des cas d'usage sont indiqués, ou repérés dans le texte libre, l'argumentaire présente d'abord
+   les retours d'expérimentation sur des usages identiques ou similaires (carnets de bord, territoires, verbatims).
 3. **Générez** : l'outil assemble les arguments les plus pertinents, recalcule les statistiques terrain,
    sélectionne les vélis du catalogue adaptés, ajoute les objections fréquentes et les étapes pour s'engager.
 4. **Téléchargez** en Word pour retoucher, ou passez par l'onglet *Rédaction assistée* pour un texte suivi.
@@ -316,5 +330,6 @@ with onglet_aide:
 - Corriger ou ajouter un argument : éditer `data/preuves.yaml` directement sur GitHub (bouton crayon).
 - Changer le statut d'une source (interne / publique) : `data/sources.yaml`.
 - Ajuster les cibles, objectifs, objections, étapes : `data/cibles.yaml` et `data/objections.yaml`.
+- Ajuster les cas d'usage (mots-clés repérés, territoires et retours d'expérience associés) : `data/cas_usage.yaml`.
 - Rafraîchir les données 30 vélis ou le catalogue : `outils/preparer_donnees.py` (voir README).
 """)

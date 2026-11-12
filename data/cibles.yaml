@@ -23,7 +23,7 @@ collectivite:
         - "Atteindre les objectifs de verdissement des flottes publiques."
         - "Donner l'exemple auprès des habitants et des entreprises du territoire."
         - "Garder des véhicules adaptés aux missions courtes et répétées des services."
-      preuves: [LOM-01, LOM-02, CEE-01, ECO-02, ECO-01, EXP-02, ENV-01, ENV-08, EXP-11, FIN-03, SOC-04]
+      preuves: [LOM-01, LOM-02, CEE-01, CEE-02, ECO-02, ECO-01, EXP-02, ENV-01, ENV-08, EXP-11, FIN-03, SOC-04]
       motifs: [professionnel, domicile_travail]
       usages: ["véhicules municipaux", "pour opérateur de maintenance et entretien"]
       objections: [OBJ-PRIX, OBJ-MAINTENANCE, OBJ-MATURITE, OBJ-AUTONOMIE]
@@ -123,7 +123,7 @@ collectivite:
         - "Soutenir des projets aux bénéfices multiples : climat, pouvoir d'achat, emploi local, inclusion."
         - "Partager les risques avec d'autres financeurs publics et privés."
         - "Disposer de résultats mesurables pour décider d'un déploiement."
-      preuves: [FIN-04, PUB-02, PUB-01, PUB-10, EXP-13, ECO-09, FIN-02, FIN-03, CEE-01, SOC-03, IND-03, EXP-12]
+      preuves: [FIN-04, PUB-02, PUB-01, PUB-10, EXP-13, ECO-09, FIN-02, FIN-03, CEE-01, CEE-02, SOC-03, IND-03, EXP-12]
       motifs: [professionnel, domicile_travail]
       usages: ["véhicules municipaux", "Véhicule En libre service", "trajets domicile travail"]
       objections: [OBJ-PRIX, OBJ-ORGANISATION, OBJ-MATURITE]
@@ -144,7 +144,7 @@ entreprise_flotte:
         - "Réduire le coût total de possession de la flotte."
         - "Respecter les obligations de verdissement de la LOM."
         - "Disposer de véhicules adaptés aux trajets courts et aux sites étendus."
-      preuves: [LOM-01, LOM-03, LOM-02, ECO-04, ECO-11, CEE-01, PRO-01, PRO-02, ECO-02, ENV-01, FIN-03]
+      preuves: [LOM-01, LOM-03, LOM-02, ECO-04, ECO-11, CEE-01, CEE-02, PRO-01, PRO-02, ECO-02, ENV-01, FIN-03]
       motifs: [professionnel, domicile_travail]
       usages: ["pour opérateur de maintenance et entretien", "pour artisans", "véhicules municipaux"]
       objections: [OBJ-PRIX, OBJ-AUTONOMIE, OBJ-MAINTENANCE, OBJ-MATURITE]
@@ -254,7 +254,7 @@ entreprise_financeur:
       enjeux:
         - "Trouver des véhicules de financement adaptés à de petites séries."
         - "Partager le risque avec des acteurs publics."
-      preuves: [FIN-02, FIN-05, FIN-06, IND-07, FIN-03, CEE-01, FIN-08]
+      preuves: [FIN-02, CEE-02, FIN-05, FIN-06, IND-07, FIN-03, CEE-01, FIN-08]
       motifs: []
       usages: []
       objections: []

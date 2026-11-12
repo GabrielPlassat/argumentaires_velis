@@ -22,12 +22,15 @@ USAGES = [
 ]
 
 
-def filtrer(cat: pd.DataFrame, usages=None, familles=None, prix_max=None, location_seulement=False) -> pd.DataFrame:
+def filtrer(cat: pd.DataFrame, usages=None, familles=None, prix_max=None, location_seulement=False,
+            usages_prioritaires=None) -> pd.DataFrame:
     if cat.empty:
         return cat
     sel = cat.copy()
+    prio = usages_prioritaires or []
     if usages:
-        sel["pertinence"] = sel["usages"].fillna("").apply(lambda s: sum(u in s for u in usages))
+        sel["pertinence"] = sel["usages"].fillna("").apply(
+            lambda s: sum(u in s for u in usages) + 2 * sum(u in s for u in prio))
         sel = sel[sel["pertinence"] > 0]
     else:
         sel["pertinence"] = 0

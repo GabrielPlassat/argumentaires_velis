@@ -28,6 +28,7 @@ class Base:
     experiences: pd.DataFrame
     catalogue: pd.DataFrame
     deploiement: dict | None
+    cas_usage: dict = field(default_factory=dict)
     anomalies: list = field(default_factory=list)
 
     def source_publique(self, source_id: str) -> bool:
@@ -51,7 +52,8 @@ def charger() -> Base:
     dep_path = DATA / "deploiement_agrege.json"
     deploiement = json.loads(dep_path.read_text(encoding="utf-8")) if dep_path.exists() else None
 
-    base = Base(sources, preuves, objections, ressources, cibles, experiences, catalogue, deploiement)
+    base = Base(sources, preuves, objections, ressources, cibles, experiences, catalogue, deploiement,
+                cas_usage=_yaml("cas_usage.yaml") or {})
     base.anomalies = verifier(base)
     return base
 
@@ -81,4 +83,11 @@ def verifier(base: Base) -> list[str]:
             for rid in obj.get("ressources", []):
                 if rid not in base.ressources:
                     pb.append(f"Cible {ref} : ressource inconnue {rid}")
+    for cid, c in base.cas_usage.items():
+        for pid in c.get("preuves", []):
+            if pid not in base.preuves:
+                pb.append(f"Cas d'usage {cid} : preuve inconnue {pid}")
+        for rid in c.get("ressources", []):
+            if rid not in base.ressources:
+                pb.append(f"Cas d'usage {cid} : ressource inconnue {rid}")
     return pb

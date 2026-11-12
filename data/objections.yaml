@@ -6,8 +6,8 @@
 
 - id: OBJ-PRIX
   question: "Un véli coûte aussi cher qu'une petite voiture."
-  reponse: "À l'achat, l'écart est réel pour les quadricycles, mais le coût complet se joue à l'usage : énergie, entretien, assurance et dépréciation sont nettement plus faibles. La location longue durée, la prime CEE et les achats groupés réduisent la marche d'entrée."
-  preuves: [ECO-08, ECO-02, ECO-04, CEE-01, FIN-03]
+  reponse: "À l'achat, l'écart est réel pour les quadricycles, mais le coût complet se joue à l'usage : énergie, entretien, assurance et dépréciation sont nettement plus faibles. La location longue durée, la prime CEE (renforcée pour les L7e à partir de 2027) et les achats groupés réduisent la marche d'entrée."
+  preuves: [ECO-08, CEE-02, ECO-02, ECO-04, CEE-01, FIN-03]
   stats: [catalogue_prix]
   vigilance: "Les voitures électriques restent beaucoup plus aidées à l'achat ; les coûts complets du véli sont en partie des coûts cibles."
 

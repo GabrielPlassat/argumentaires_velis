@@ -329,6 +329,15 @@
   limite: "Montants en € dépendant du prix des CEE au moment de l'opération."
   themes: [flotte, financement, economie]
 
+- id: CEE-02
+  titre: "Une aide de 2 000 € annoncée pour les quadricycles L7e"
+  texte: "Une aide de 2 000 € pour les quadricycles lourds L7e, par bonification de la fiche CEE existante sur les quadricycles électriques (TRA-EQ-130), vient d'être annoncée ; elle sera effective début 2027 et ne concerne pas les quadricycles légers L6e."
+  source: annonce_cee_l7
+  page: "annonce de novembre 2026"
+  niveau: annonce
+  limite: "Bénéficiaires, conditions et date exacte à confirmer à la publication du texte."
+  themes: [flotte, financement, economie, objection_prix, politique]
+
 # ─────────────────────── EXPÉRIMENTATIONS ET USAGES ───────────────────────
 - id: EXP-01
   titre: "30 vélis testés dans plus de 20 territoires"

@@ -155,3 +155,26 @@ def test_extraits_et_correction(monkeypatch):
     arg = generer(BASE, Contexte(selection=[("collectivite", "flotte")]))
     corrige = ia.corriger(texte, ["1970"], arg, BASE, "sk-ant-x")
     assert verifier_nombres(corrige, arg, BASE) == []
+
+
+def test_cas_usage_prioritaires():
+    from xd.generateur import detecter_cas_usage
+    assert "sante_domicile" in detecter_cas_usage("Nos aides à domicile font leurs tournées en voiture", BASE.cas_usage)
+    assert "tourisme" in detecter_cas_usage("L'office de tourisme veut proposer des balades", BASE.cas_usage)
+    arg = generer(BASE, Contexte(selection=[("entreprise_flotte", "flotte")], diffusion_externe=False,
+                                 precisions="Association d'aides à domicile : 12 salariées en tournée chez les patients."))
+    assert arg.cas_usage == ["Aide à domicile, soins, établissements de santé"]
+    exp = [s for s in arg.sections if s.titre.startswith("Ce que montrent")][0]
+    textes = " ".join(b.texte for b in exp.blocs)
+    assert "Véli'Test" in textes                       # retour d'expérience Le Mans en premier
+    assert "trajets comparables" in textes             # statistiques sur les carnets comparables
+    terr = [b for b in exp.blocs if b.type == "tableau"][0].tableau
+    assert {"Le Mans", "Centre Hospitalier de Niort"} <= set(terr.index)
+
+
+def test_annonce_cee_l7():
+    arg = generer(BASE, Contexte(selection=[("collectivite", "flotte")]))
+    ids = [p["id"] for p in arg.preuves_utilisees]
+    assert "CEE-02" in ids
+    md = vers_markdown(arg, BASE)
+    assert "2 000 €" in md and "mesure annoncée" in md

@@ -132,7 +132,8 @@ def _fin_docx(doc, arg, base, afficher_niveaux):
         para.runs[0].font.size = Pt(9)
     if afficher_niveaux:
         n = doc.add_paragraph("Les mentions « estimation », « projection » et « objectif » signalent des chiffres qui "
-                              "reposent sur les hypothèses des documents cités ; les autres chiffres sont des données "
+                              "reposent sur les hypothèses des documents cités, et « mesure annoncée » une disposition pas encore "
+                              "en vigueur ; les autres chiffres sont des données "
                               "mesurées, des retours de terrain ou des textes en vigueur.")
         n.runs[0].italic = True
         n.runs[0].font.size = Pt(8.5)

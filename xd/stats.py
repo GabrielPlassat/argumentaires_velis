@@ -102,6 +102,8 @@ def fmt_pct(x: float) -> str:
 
 
 def _perimetre(motifs) -> str:
+    if isinstance(motifs, str):
+        return motifs
     if not motifs:
         return "l'ensemble des trajets"
     noms = [LIBELLES_MOTIFS.get(m, m) for m in motifs]
@@ -241,4 +243,27 @@ def tableau_vehicules(df: pd.DataFrame) -> pd.DataFrame:
 def preuves_calculees(df: pd.DataFrame, motifs=None, territoires=None, vehicules=None) -> list[dict]:
     sel = filtrer(df, motifs, territoires, vehicules)
     resultats = [f(sel, motifs) for f in (bilan, avantages, difficultes, meteo, distances)]
+    return [r for r in resultats if r]
+
+
+# ─────────────────────── Cas d'usage (expérimentations comparables) ───────────────────────
+
+def masque_cas(df: pd.DataFrame, definitions: list[dict]) -> pd.Series:
+    """Carnets correspondant à au moins un cas d'usage : motif saisi ou territoire documenté."""
+    masque = pd.Series(False, index=df.index)
+    motifs_txt = df["motif"].fillna("").astype(str).str.lower()
+    for d in definitions:
+        if d.get("motifs"):
+            masque |= motifs_txt.str.contains(d["motifs"], regex=True)
+        for terr, cats in (d.get("territoires") or {}).items():
+            m = df["territoire"] == terr
+            if cats:
+                m &= df["categorie_motif"].isin(cats)
+            masque |= m
+    return masque
+
+
+def preuves_sur(sel: pd.DataFrame, libelle: str) -> list[dict]:
+    """Statistiques calculées sur une sélection de carnets déjà filtrée, avec un libellé de périmètre."""
+    resultats = [f(sel, libelle) for f in (bilan, avantages, difficultes, meteo, distances)]
     return [r for r in resultats if r]

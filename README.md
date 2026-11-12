@@ -51,6 +51,7 @@ Aucun chiffre n'est généré par une IA. Une étape de **rédaction assistée**
 | Passer une source de « interne » à « publique » | `data/sources.yaml` (ligne `diffusion`) |
 | Modifier les cibles, accroches, enjeux, étapes, arguments retenus par cible | `data/cibles.yaml` |
 | Modifier les objections et réponses | `data/objections.yaml` |
+| Modifier les cas d'usage (mots-clés, territoires et retours d'expérience mis en avant) | `data/cas_usage.yaml` |
 | Ajouter des liens « pour aller plus loin » | `data/ressources.yaml` |
 
 Format d'une preuve :

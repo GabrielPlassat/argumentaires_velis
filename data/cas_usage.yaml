@@ -1,0 +1,90 @@
+# Cas d'usage envisagés par le destinataire.
+# Quand un cas d'usage est choisi (ou repéré dans le texte de contexte), l'argumentaire met en avant
+# les retours d'expérimentation sur des usages identiques ou similaires.
+#
+# mots_cles   repérage automatique dans le champ « Préciser le contexte » (minuscules, sans accent requis)
+# motifs      expression régulière appliquée aux motifs saisis dans les carnets de bord 30 vélis
+# territoires territoires d'expérimentation documentés pour ce cas d'usage, même quand les carnets ne
+#             précisent pas le motif ; valeur = catégories de motif à retenir (vide = tous les carnets)
+# preuves     retours d'expérience et faits propres à ce cas d'usage (data/preuves.yaml), par priorité
+# usages      cas d'usage correspondants dans le catalogue des vélis à la vente
+# ressources  fiches et bilans d'expérimentation (data/ressources.yaml)
+
+agents:
+  label: "Déplacements des agents, services techniques, flotte de service"
+  mots_cles: [agent, "flotte de service", "vehicule de service", "vehicules de service", "service technique",
+              "services techniques", mairie, elus, "parc automobile", "parc de vehicules", "deplacements professionnels"]
+  motifs: "r[ée]union|mission|[ée]lu|mairie|travaux|contr[ôo]le de postes|mat[ée]riel|service|permanence|trajet pro|professionn|travail - distribution"
+  territoires: {}
+  preuves: [EXP-02, EXP-11, LOM-01, CEE-02, EXP-03]
+  usages: ["véhicules municipaux", "pour opérateur de maintenance et entretien"]
+  ressources: [R-SYNTH30, R-FICHES-TERR, R-LOM]
+
+sante_domicile:
+  label: "Aide à domicile, soins, établissements de santé"
+  mots_cles: ["aide a domicile", "aides a domicile", auxiliaire, "auxiliaires de vie", soins, soignant, infirmi,
+              hopital, hospitalier, sante, ehpad, ccas, ssiad, "services a la personne", "aide a la personne", medico]
+  motifs: "\\bvad\\b|soin|ehpad|epad|patient|pharmacie|\\bccas\\b|auxiliaire"
+  territoires:
+    "Le Mans": [professionnel]            # Véli'Test : tournées d'auxiliaires de vie (Ai'Dom)
+    "Centre Hospitalier de Niort": []     # visites à domicile et soins
+  preuves: [EXP-06, SOC-07, SOC-04]
+  usages: ["véhicules municipaux", "trajets domicile travail"]
+  ressources: [R-LEMANS, R-NIORT]
+
+logistique:
+  label: "Logistique, livraisons, transport de matériel"
+  mots_cles: [logistique, livraison, livrer, colis, marchandise, "dernier kilometre", "transport de materiel",
+              commercant, artisan, reassort]
+  motifs: "livraison|livrer|colis|mat[ée]riel|distribution|transport du"
+  territoires: {}
+  preuves: [EXP-07, IND-05, PRO-04, PRO-05, PRO-01]
+  usages: ["distribuer courrier et colis", "pour commerçants et stands mobiles", "pour artisans"]
+  ressources: [R-SAMOA, R-VELIPRO, R-AVELIPRO]
+
+tourisme:
+  label: "Tourisme, découverte du territoire, loisirs"
+  mots_cles: [tourisme, touristique, touriste, visiteur, "office de tourisme", decouverte, loisir, randonnee, patrimoine]
+  motifs: "touris|balade|ballade|visite|loisir|d[ée]couverte|tour du village"
+  territoires:
+    "CA du Grand Avignon": []             # expérimentation de l'office de tourisme
+  preuves: [TOU-01, TOU-03, EXP-11, TOU-02]
+  usages: ["Tourisme Découverte d'un territoire", "Véhicule En libre service"]
+  ressources: [R-AVIGNON, R-CANAUX]
+
+domicile_travail:
+  label: "Trajets domicile-travail et trajets du quotidien"
+  mots_cles: ["domicile-travail", "domicile travail", salaries, pendulaire, quotidien, habitants, courses]
+  motifs: "domicile|travail|course"
+  territoires: {}
+  preuves: [EXP-05, EXP-10, ECO-05, EXP-08]
+  usages: ["trajets domicile travail", "Faire ses courses"]
+  ressources: [R-VIMOB, R-INVD, R-SYNTH30]
+
+inclusion:
+  label: "Mobilité inclusive, insertion, accès à l'emploi"
+  mots_cles: [insertion, inclusive, solidaire, precarite, "france travail", "mission locale", rsa, "acces a l'emploi",
+              "retour a l'emploi", "sans permis", jeunes, demandeurs]
+  motifs: "france travail|insertion|emploi|croix rouge|emma[üu]s"
+  territoires: {}
+  preuves: [EXP-10, ASS-02, SOC-01, SOC-03, SHS-05]
+  usages: ["trajets domicile travail", "Véhicule En libre service"]
+  ressources: [R-INVD, R-GUIDE]
+
+scolaire:
+  label: "Transport scolaire et périscolaire"
+  mots_cles: [scolaire, periscolaire, ecole, enfants, velobus, "velo-bus", ramassage, college]
+  motifs: "[ée]cole|enfant|scolaire|nounou|centre de loisirs|coll[èe]ge"
+  territoires: {}
+  preuves: [PRO-03]
+  usages: ["Transport scolaire et périscolaire avec plusieurs enfants"]
+  ressources: [R-SYNTH30]
+
+autopartage:
+  label: "Autopartage, véhicules en libre-service"
+  mots_cles: [autopartage, "libre-service", "libre service", partage, "vehicule partage", "flotte partagee", location]
+  motifs: "partag|libre"
+  territoires: {}
+  preuves: [EXP-10, ECO-09, FIN-03]
+  usages: ["Véhicule En libre service"]
+  ressources: [R-FINANCEMENT, R-SYNTH30]

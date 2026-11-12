@@ -21,6 +21,7 @@ NIVEAUX = {
     "estimation": "estimation",
     "projection": "projection",
     "objectif": "objectif du programme",
+    "annonce": "mesure annoncée, pas encore en vigueur",
 }
 
 TERRITOIRES = {
@@ -51,6 +52,7 @@ class Contexte:
     familles_vehicules: list = field(default_factory=list)
     prix_max: float | None = None
     location_seulement: bool = False
+    cas_usage: list = field(default_factory=list)   # cas d'usage envisagés (identifiants de data/cas_usage.yaml)
 
 
 @dataclass
@@ -82,6 +84,7 @@ class Argumentaire:
     references: list          # [(numéro, source_id)]
     avertissements: list
     preuves_utilisees: list   # preuves (dict) dans l'ordre, pour l'IA et la vérification
+    cas_usage: list = field(default_factory=list)   # libellés des cas d'usage pris en compte
 
 
 class _Citations:
@@ -123,6 +126,24 @@ def _entrelacer(listes, limite):
                     break
         i += 1
     return out
+
+
+def _sans_accent(texte: str) -> str:
+    import unicodedata
+    return "".join(c for c in unicodedata.normalize("NFD", texte.lower()) if unicodedata.category(c) != "Mn")
+
+
+def detecter_cas_usage(texte: str, cas_usage: dict) -> list[str]:
+    """Cas d'usage repérés dans un texte libre, d'après leurs mots-clés."""
+    import re
+    t = _sans_accent(texte or "")
+    if not t.strip():
+        return []
+    trouves = []
+    for cid, c in cas_usage.items():
+        if any(re.search(r"(?<![a-z])" + re.escape(_sans_accent(m)), t) for m in c.get("mots_cles", [])):
+            trouves.append(cid)
+    return trouves
 
 
 def preuve_deploiement(base: Base, variante: str = "demande") -> dict | None:
@@ -182,9 +203,17 @@ def generer(base: Base, ctx: Contexte) -> Argumentaire:
         s.blocs.append(Bloc("puces", titre="Ce qui compte pour vous", items=enjeux))
     sections.append(s)
 
-    # 2. Arguments clés
-    listes = [[pid for pid in obj.get("preuves", []) if pid in base.preuves and autorisee(base.preuves[pid])]
-              for *_, obj in objectifs]
+    # Cas d'usage envisagés : choisis explicitement ou repérés dans le texte de contexte
+    cas_ids = [c for c in _uniques(list(ctx.cas_usage) + detecter_cas_usage(ctx.precisions, base.cas_usage))
+               if c in base.cas_usage]
+    cas_defs = [base.cas_usage[c] for c in cas_ids]
+    cas_labels = [d["label"] for d in cas_defs]
+    preuves_cas = _uniques(pid for d in cas_defs for pid in d.get("preuves", [])
+                           if pid in base.preuves and autorisee(base.preuves[pid]))
+
+    # 2. Arguments clés (les retours d'expérience propres aux cas d'usage sont réservés à la partie 3)
+    listes = [[pid for pid in obj.get("preuves", []) if pid in base.preuves and autorisee(base.preuves[pid])
+               and pid not in preuves_cas] for *_, obj in objectifs]
     choix = _entrelacer(listes, ctx.max_preuves)
     extra = []
     for t in ctx.types_territoire:
@@ -200,29 +229,67 @@ def generer(base: Base, ctx: Contexte) -> Argumentaire:
         avert.append(f"{exclues} élément(s) issus de documents internes ont été écartés (mode diffusion externe).")
     sections.append(s)
 
-    # 3. Expérimentations : statistiques recalculées
+    # 3. Expérimentations : priorité aux évaluations sur des cas d'usage identiques ou similaires
     motifs = _uniques(m for *_, obj in objectifs for m in obj.get("motifs", []))
     exp = st.preparer(base.experiences)
-    s = Section("Ce que montrent les expérimentations de terrain")
+    s = Section("Ce que montrent les expérimentations sur des usages comparables" if cas_defs
+                else "Ce que montrent les expérimentations de terrain")
+    territoires = ctx.territoires_30veli or None
+    sel_cas = None
+    if cas_defs:
+        s.blocs.append(Bloc("paragraphe", texte="Les expérimentations déjà réalisées ont porté sur des usages identiques "
+                            "ou proches de ceux envisagés (" + ", ".join(l[0].lower() + l[1:] for l in cas_labels)
+                            + ") : leurs enseignements sont présentés en premier."))
+        for pid in preuves_cas:
+            if pid not in deja:
+                s.blocs.append(bloc_preuve(base.preuves[pid]))
+        if not exp.empty:
+            base_sel = st.filtrer(exp, None, territoires)
+            sel_cas = base_sel[st.masque_cas(base_sel, cas_defs)]
+            libelle = "les trajets comparables (" + ", ".join(l[0].lower() + l[1:] for l in cas_labels) + ")"
+            calc_cas = st.preuves_sur(sel_cas, libelle)
+            if calc_cas:
+                for p in calc_cas[:4]:
+                    s.blocs.append(bloc_preuve(p))
+                for v in st.verbatims(sel_cas, n=3):
+                    s.blocs.append(Bloc("verbatim", texte=v["texte"], ref=cit.numero(st.SOURCE),
+                                        attribution=f"testeur·rice, {v['territoire']}, {v['vehicule']}"))
+                tab = st.tableau_territoires(sel_cas)
+                tab = tab[tab["Carnets"] >= 5].head(6)   # on ne cite pas les territoires avec 1 à 4 carnets
+                if not tab.empty:
+                    s.blocs.append(Bloc("tableau", titre="Territoires ayant testé des usages comparables", tableau=tab))
+            else:
+                avert.append(f"Peu de carnets de bord sur ces cas d'usage ({len(sel_cas)}) : les statistiques "
+                             "terrain portent sur un périmètre plus large.")
+                sel_cas = None
     if not exp.empty:
-        territoires = ctx.territoires_30veli or None
-        calc = st.preuves_calculees(exp, motifs or None, territoires)
-        if not calc and (motifs or territoires):
-            avert.append("Pas assez de carnets de bord pour ce périmètre : statistiques calculées sur l'ensemble des trajets.")
-            calc = st.preuves_calculees(exp, None, None)
-            motifs = []
-        for p in calc[:4]:
-            s.blocs.append(bloc_preuve(p))
-        sel = st.filtrer(exp, motifs or None, territoires)
-        for v in st.verbatims(sel, n=3):
-            s.blocs.append(Bloc("verbatim", texte=v["texte"], ref=cit.numero(st.SOURCE),
-                                attribution=f"testeur·rice, {v['territoire']}, {v['vehicule']}"))
-        if ctx.territoires_30veli:
-            s.blocs.append(Bloc("tableau", titre="Résultats par territoire retenu",
-                                tableau=st.tableau_territoires(sel)))
+        if sel_cas is not None:
+            # rappel bref de l'ensemble, comme point de comparaison
+            ensemble = st.bilan(st.filtrer(exp, None, territoires), "l'ensemble des trajets")
+            if ensemble:
+                ensemble["titre"] = "Sur l'ensemble des expérimentations"
+                s.blocs.append(bloc_preuve(ensemble))
+        else:
+            calc = st.preuves_calculees(exp, motifs or None, territoires)
+            if not calc and (motifs or territoires):
+                avert.append("Pas assez de carnets de bord pour ce périmètre : statistiques calculées sur l'ensemble des trajets.")
+                calc = st.preuves_calculees(exp, None, None)
+                motifs = []
+            for p in calc[:4]:
+                s.blocs.append(bloc_preuve(p))
+            sel = st.filtrer(exp, motifs or None, territoires)
+            for v in st.verbatims(sel, n=3):
+                s.blocs.append(Bloc("verbatim", texte=v["texte"], ref=cit.numero(st.SOURCE),
+                                    attribution=f"testeur·rice, {v['territoire']}, {v['vehicule']}"))
+            if ctx.territoires_30veli:
+                s.blocs.append(Bloc("tableau", titre="Résultats par territoire retenu",
+                                    tableau=st.tableau_territoires(sel)))
     for pid in ["EXP-01"]:
         if pid not in deja and pid in base.preuves and autorisee(base.preuves[pid]):
-            s.blocs.insert(0, bloc_preuve(base.preuves[pid]))
+            if cas_defs:
+                s.blocs.append(bloc_preuve(base.preuves[pid]))
+            else:
+                s.blocs.insert(0, bloc_preuve(base.preuves[pid]))
     dep = preuve_deploiement(base)
     if dep and autorisee(dep) and any(f in ("collectivite", "entreprise_flotte", "association", "entreprise_financeur")
                                       for f, *_ in objectifs):
@@ -231,10 +298,11 @@ def generer(base: Base, ctx: Contexte) -> Argumentaire:
         sections.append(s)
 
     # 4. Catalogue
-    usages = _uniques(u for *_, obj in objectifs for u in obj.get("usages", []))
+    usages_cas = _uniques(u for d in cas_defs for u in d.get("usages", []))
+    usages = _uniques(usages_cas + [u for *_, obj in objectifs for u in obj.get("usages", [])])
     if ctx.inclure_catalogue and (usages or ctx.familles_vehicules) and not base.catalogue.empty:
         selcat = cat_mod.filtrer(base.catalogue, usages or None, ctx.familles_vehicules or None,
-                                 ctx.prix_max, ctx.location_seulement)
+                                 ctx.prix_max, ctx.location_seulement, usages_prioritaires=usages_cas)
         synth = cat_mod.preuve_synthese(selcat, usages)
         if synth and autorisee(synth):
             s = Section("Des vélis disponibles pour vos usages")
@@ -289,7 +357,8 @@ def generer(base: Base, ctx: Contexte) -> Argumentaire:
         sections.append(Section("Comment s'engager concrètement", [Bloc("puces", items=actions)]))
 
     # 8. Pour aller plus loin
-    rids = _uniques(r for *_, obj in objectifs for r in obj.get("ressources", []))
+    rids = _uniques([r for d in cas_defs for r in d.get("ressources", [])]
+                    + [r for *_, obj in objectifs for r in obj.get("ressources", [])])
     liens = [f"{base.ressources[r]['titre']} — {base.ressources[r]['url']}" for r in rids if r in base.ressources]
     if liens:
         sections.append(Section("Pour aller plus loin", [Bloc("puces", items=liens[:10])]))
@@ -311,7 +380,7 @@ def generer(base: Base, ctx: Contexte) -> Argumentaire:
         if base.sources.get(sid, {}).get("diffusion") != "publique":
             avert.append("Cet argumentaire cite des documents internes : vérifier avant toute diffusion externe.")
             break
-    return Argumentaire(titre, sous_titre, sections, references, _uniques(avert), utilisees)
+    return Argumentaire(titre, sous_titre, sections, references, _uniques(avert), utilisees, cas_labels)
 
 
 # ───────────────────────────── Rendu Markdown ─────────────────────────────
@@ -379,6 +448,6 @@ def _sources_markdown(arg: Argumentaire, base: Base, afficher_niveaux: bool) -> 
         lignes.append(f"{num}. {src.get('auteur', '')}, *{src.get('titre', sid)}*, {src.get('date', '')}{url}{statut}")
     if afficher_niveaux:
         lignes += ["", "*Les mentions « estimation », « projection » et « objectif » signalent des chiffres qui reposent "
-                   "sur les hypothèses des documents cités ; les autres chiffres sont des données mesurées, des retours "
-                   "de terrain ou des textes en vigueur.*"]
+                   "sur les hypothèses des documents cités, et « mesure annoncée » une disposition pas encore en vigueur ; "
+                   "les autres chiffres sont des données mesurées, des retours de terrain ou des textes en vigueur.*"]
     return lignes

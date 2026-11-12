@@ -10,7 +10,7 @@ import re
 from .generateur import NIVEAUX, Argumentaire, _cite
 
 # Niveaux de preuve signalés dans le texte (les mesures, textes en vigueur et retours de terrain se lisent tels quels)
-NIVEAUX_SIGNALES = {"estimation", "projection", "objectif"}
+NIVEAUX_SIGNALES = {"estimation", "projection", "objectif", "annonce"}
 CONNECTEURS = ["", "Par ailleurs, ", "De plus, ", "En outre, ", "Enfin, "]
 ETAPES = ["d'abord", "ensuite", "puis", "en parallèle", "par ailleurs", "de même", "enfin"]
 
@@ -109,7 +109,7 @@ def en_prose(arg: Argumentaire, afficher_niveaux: bool = True, inclure_notes: bo
                 elements.append(("p", _puces_en_phrase(s.titre, b)))
             elif b.type == "tableau" and b.tableau is not None and not b.tableau.empty:
                 if "Territoire" == (b.tableau.index.name or ""):
-                    elements.append(("p", _territoires_en_phrase(b.tableau)))
+                    elements.append(("p", _territoires_en_phrase(b.tableau, b.titre)))
                 else:
                     elements.append(("table", b.titre, b.tableau))
         vider()
@@ -147,7 +147,9 @@ def _puces_en_phrase(titre_section: str, b) -> str:
     return _enumerer(items).capitalize() + "."
 
 
-def _territoires_en_phrase(df) -> str:
-    morceaux = [f"{terr} ({int(r['Carnets'])} carnets, {r['Bilan positif']} de bilans positifs, avec {r['Modèles testés']})"
+def _territoires_en_phrase(df, titre: str = "") -> str:
+    morceaux = [f"{terr} ({int(r['Carnets'])} carnet{'s' if int(r['Carnets']) > 1 else ''}, {r['Bilan positif']} de bilans positifs, avec {r['Modèles testés']})"
                 for terr, r in df.iterrows()]
-    return "Dans les territoires retenus, les résultats sont les suivants : " + " ; ".join(morceaux) + "."
+    intro = ("Ces usages ont notamment été testés dans les territoires suivants : " if "comparables" in (titre or "")
+             else "Dans les territoires retenus, les résultats sont les suivants : ")
+    return intro + " ; ".join(morceaux) + "."

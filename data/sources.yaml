@@ -88,6 +88,14 @@ cee_tra_eq_130:
   url: "https://www.ecologie.gouv.fr/sites/default/files/documents/TRA-EQ-130%20vA65-1%20%C3%A0%20compter%20du%2001-01-2025.pdf"
   diffusion: publique
 
+annonce_cee_l7:
+  titre: "Annonce d'une bonification de la fiche CEE TRA-EQ-130 : aide de 2 000 € pour les quadricycles L7e, effective début 2027"
+  auteur: "Information communiquée par le programme eXtrême Défi (ADEME)"
+  date: "novembre 2026"
+  url: ""
+  diffusion: publique
+  note: "Ajouter l'URL du texte officiel (arrêté ou nouvelle version de la fiche) dès sa publication."
+
 sdmp_2026:
   titre: "Stratégie de développement des mobilités propres (SDMP) 2026"
   auteur: "Gouvernement"
